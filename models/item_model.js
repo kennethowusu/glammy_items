@@ -8,6 +8,8 @@ require('dotenv').config();
 const Description = require('../models/description_model');
 const Image = require('./images_model');
 const Variant = require('./variant_model');
+const Variant_Image = require('./variant_image_model');
+const Video = require('./video_model');
 
 const Item = sequelize.define(('item'),{
 
@@ -54,4 +56,5 @@ const Item = sequelize.define(('item'),{
 Item.hasOne(Description, {foreignKey: 'item_id', sourceKey: 'id'});
 Item.hasMany(Image,{foreignKey:"item_id"});
 Item.hasMany(Variant,{foreignKey:"item_id"});
+Item.hasMany(Variant_Image,{foreignKey:"item_id"});
 module.exports = Item;

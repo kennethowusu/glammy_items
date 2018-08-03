@@ -29,7 +29,7 @@ module.exports.addNewItem = function(req, res, next) {
   }
 
   Item.sync({
-      force: true
+      force: false
     })
     .then(() => {
       return Item.create({
@@ -45,7 +45,7 @@ module.exports.addNewItem = function(req, res, next) {
     })
     .then(() => {
       Description.sync({
-          force: true
+          force: false
         })
         .then((returnedItem) => {
           console.log(returnedItem);
@@ -64,14 +64,11 @@ module.exports.addNewItem = function(req, res, next) {
     .catch(err => {
       return res.send(err);
     })
-
-
-
 }
 
 //update Item about
 module.exports.updateAbout = (req,res,next)=>{
-  const item_id = req.query.item_id;
+  const item_id = req.params.item_id;
   const about = req.query.about;
 
   Description.update({
@@ -91,7 +88,7 @@ module.exports.updateAbout = (req,res,next)=>{
 
 //update Item ingredients
 module.exports.updateIngredients = (req,res,next)=>{
-  const item_id = req.query.item_id;
+  const item_id = req.params.item_id;
   const ingredients = req.query.ingredients;
 
   Description.update({
@@ -111,7 +108,7 @@ module.exports.updateIngredients = (req,res,next)=>{
 
 //update Item how_to_use
 module.exports.updateHow_to_use = (req,res,next)=>{
-  const item_id = req.query.item_id;
+  const item_id = req.params.item_id;
   const how_to_use = req.query.how_to_use
 
   Description.update({
@@ -133,13 +130,13 @@ module.exports.updateHow_to_use = (req,res,next)=>{
 
 //update Item images
 module.exports.updateItemImages = (req,res,next)=>{
-  const item_id =  req.query.item_id;
+  const item_id =  req.params.item_id;
 
   s3func.upload(req,res,function(err,file){
     if(err){return res.send(err)};
 
     //if no error, store in image table
-    Image.sync({force:true})
+    Image.sync({force: false})
     .then(function(){
         return Image.create({
           item_id : item_id,
@@ -158,11 +155,11 @@ module.exports.updateItemImages = (req,res,next)=>{
 
 //create new variant
 module.exports.createNewVariant = (req,res,next)=>{
-  const  item_id = req.query.item_id;
+  const  item_id = req.params.item_id;
   const  variant_id = item.generateId();
   const  variant_num = item.generateItemNumber();
 
-  Variant.sync({force:true})
+  Variant.sync({force: false})
   .then(()=>{
     return Variant.create({
        item_id : item_id,
@@ -181,12 +178,12 @@ module.exports.createNewVariant = (req,res,next)=>{
 
 //crate new variant image
 module.exports.updateVariantImages = (req,res,next)=>{
-  const variant_id = req.query.variant_id;
+  const variant_id = req.params.variant_id;
   s3func.upload(req,res,function(err,file){
     if(err){return res.send(err)};
 
     //if no error, store in image table
-    Variant_Image.sync({force:true})
+    Variant_Image.sync({force: false})
     .then(function(){
         return Variant_Image.create({
           variant_id : variant_id,
@@ -209,7 +206,7 @@ module.exports.updateVariantImages = (req,res,next)=>{
 //delete item image
 module.exports.deleteItemImage = (req,res,next)=>{
   const image = req.query.image;
-  const item_id = req.query.item_id;
+  const item_id = req.params.item_id;
 
 
  const  params = {
@@ -234,7 +231,7 @@ module.exports.deleteItemImage = (req,res,next)=>{
 //delete item image
 module.exports.deleteVariantImage = (req,res,next)=>{
   const image = req.query.image;
-  const variant_id = req.query.variant_id;
+  const variant_id = req.params.variant_id;
 
 
  const  params = {
@@ -252,5 +249,291 @@ module.exports.deleteVariantImage = (req,res,next)=>{
     })
   }
 });
+}
 
+
+//delete  item
+module.exports.deleteItem = (req,res,next)=>{
+    const item_id = req.params.item_id;
+
+
+
+    //delete item
+    Item.destroy({where:{id:item_id}})
+    .then(function(){
+
+    //delete item description
+
+    Description.destroy({where:{item_id:item_id}})
+    .then(function(){
+
+    //get item images
+    Image.findAll({where:{item_id:item_id}})
+    .then((itemImages)=>{
+      const images = [];
+     itemImages.forEach((itemimages)=>{
+       images.push(itemimages.image);
+     });//foreach itemimages
+      //convert images to a form required by amazon s3
+     const imagesArray = [];
+      images.forEach(function(image){
+        imagesArray.push({"Key":image});
+      })
+
+      //delete all item images after finding them
+      var params = {
+       Bucket: process.env.S3_BUCKET,
+       Delete: {
+        Objects: imagesArray
+
+       }
+      };
+      s3func.s3.deleteObjects(params, function(err, data){
+        if(err){return res.send(err)
+        }else{
+
+
+
+
+
+                      //delete item images
+                      Image.destroy({where:{item_id:item_id}}).
+                      then(function(){
+
+
+                        //delete variant images
+                        const variantImages = [];
+                        const variantImageArray = [];
+                        Variant_Image.findAll({where:{item_id:item_id}})
+                        .then(function(variantimages){
+
+                           variantimages.forEach(function(variant){
+                             variantImages.push(variant.image);
+                           })
+
+                           variantImages.forEach(function(variant_image){
+                             variantImageArray.push({"Key":variant_image});
+                           })
+                           //delete all item images after finding them
+                           var variant_params = {
+                            Bucket: process.env.S3_BUCKET,
+                            Delete: {
+                             Objects: variantImageArray
+
+                            }
+                           };
+                           s3func.s3.deleteObjects(variant_params, function(err, data){
+                             if(err){return res.send(err);}
+
+                          //delete variant images from database
+                          Variant_Image.destroy({where:{item_id:item_id}})
+                          .then(function(){
+
+                            //delete variants from database;
+                            Variant.destroy({where:{item_id:item_id}})
+                            .then(function(){
+
+                              return res.send("All done you can continue");
+
+                            })
+
+
+
+                          })
+
+
+
+                    })
+
+                      })
+                      .catch(function(err){
+
+                      })//catch delete Image
+                    })
+
+
+
+
+
+
+
+
+
+
+
+    }//s3func else
+
+      })//s3func.s3
+    })
+    .catch(()=>{
+      return res.send(err);
+    })
+
+
+    })//description
+    })
+
+}
+
+
+//============UPDATE ITEM==========================//
+
+
+//update Item price
+module.exports.updateItemName = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const name = req.query.name
+
+  Item.update({
+    name : name,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("Price to use about updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+//update Item price
+module.exports.updateItemPrice = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const price = req.query.price
+
+  Item.update({
+    price : price,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("Price to use about updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+//update Item original_price
+module.exports.updateItemOriginalPrice = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const original_price = req.query.original_price
+
+  Item.update({
+    original_price :original_price,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("original_price to use about updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+//update Item main_category
+module.exports.updateItemMaincategory = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const main_category = req.query.main_category
+
+  Item.update({
+    main_category : main_category,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("original_price to use about updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+
+//update Item sub_category
+module.exports.updateItemSubcategory = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const sub_category = req.query.sub_category;
+
+  Item.update({
+    sub_category : sub_category,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("original_price to use about updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+//update Item sub_category
+module.exports.updateItemCategory = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  const category = req.query.category;
+
+  Item.update({
+    category : category,
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("Category  updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+
+
+//activate item
+module.exports.activateItem = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  Item.update({
+    is_active : "yes",
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("Item activated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+
+
+//activate item
+module.exports.deactivateItem = (req,res,next)=>{
+  const item_id = req.params.item_id;
+  Item.update({
+    is_active : "no",
+  }, {
+    where: {
+      id : item_id
+    }
+  })
+  .then(()=>{
+      return res.send("Item deactivated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
 }

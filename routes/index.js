@@ -39,7 +39,38 @@ router.delete('/items/:item_id/descriptions/images',itemController.deleteItemIma
 //delete variant image
 router.delete('/items/:item_id/variants/:variant_id/images',itemController.deleteVariantImage);
 
-// router.put('/items/:item_id/variants/',itemController.create)
+// router.put('/items/:item_id/variants/',itemController.create);
+
+//delete item
+router.delete('/items/:item_id',itemController.deleteItem);
+
+
+//update items
+
+//update item price
+router.put('/items/:item_id/name',itemController.updateItemName);
+
+//update item price
+router.put('/items/:item_id/price',itemController.updateItemPrice);
+
+//update item orignal price
+router.put('/items/:item_id/original_price',itemController.updateItemOriginalPrice);
+
+
+//update item main category
+router.put('/items/:item_id/main_category',itemController.updateItemMaincategory);
+
+//update item main category
+router.put('/items/:item_id/sub_category',itemController.updateItemSubcategory);
+
+//update item category
+router.put('/items/:item_id/category',itemController.updateItemCategory);
+
+//activate item
+router.put('/items/:item_id/activate',itemController.activateItem);
+
+//deactivate item
+router.put('/items/:item_id/deactivate',itemController.deactivateItem);
 
 // router.put('/items/:item_id/descriptions/images',itemController.updateItemImages);
 module.exports = router;
