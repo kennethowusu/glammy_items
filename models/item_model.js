@@ -4,8 +4,11 @@ const bcrypt = require('bcrypt');
 
 require('dotenv').config();
 //models
+
 const Description = require('../models/description_model');
-const Image = require('./models/images_model');
+const Image = require('./images_model');
+const Variant = require('./variant_model');
+
 const Item = sequelize.define(('item'),{
 
   id:{
@@ -45,9 +48,10 @@ const Item = sequelize.define(('item'),{
     allowNull:false,
     defaultValue:"no"
   }
-
 })
 
+
 Item.hasOne(Description, {foreignKey: 'item_id', sourceKey: 'id'});
-Item.hasMany(Image);
+Item.hasMany(Image,{foreignKey:"item_id"});
+Item.hasMany(Variant,{foreignKey:"item_id"});
 module.exports = Item;

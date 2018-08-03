@@ -1,37 +1,19 @@
 //models
 const Item = require('../models/item_model');
 const Description = require('../models/description_model');
+const Image = require('../models/images_model');
+const Variant = require('../models/variant_model');
+const Variant_Image = require('../models/variant_image_model');
 
-//fucntions
 const item = require('../functions/itemFunction');
+
+
+
+const s3func = require('../functions/s3func');
+
+
+//require dot env
 require('dotenv').config();
-
-//require .env
-//for amazon s3
-const aws = require('aws-sdk')
-const multer = require('multer')
-const multerS3 = require('multer-s3')
-
-//create new new s3 instance
-module.exports.s3 = new aws.S3({
- apiVersion: '2006-03-01',
- accessKeyId: process.env.AWS_ACCESS_KEY_ID,
- secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
-})
-
-module.exports.upload = multer({
-  storage: multerS3({
-    s3: module.exports.s3,
-    bucket: process.env.S3_BUCKET,
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
-  })
-})
-
 //add new item
 module.exports.addNewItem = function(req, res, next) {
 
@@ -151,9 +133,124 @@ module.exports.updateHow_to_use = (req,res,next)=>{
 
 //update Item images
 module.exports.updateItemImages = (req,res,next)=>{
-// 
-//   //get image
-//   //get imgae file name
-// console.log(process.env.AWS_ACCESS_KEY_ID);
-// console.log(process.env.AWS_SECRET_ACCESS_KEY);
+  const item_id =  req.query.item_id;
+
+  s3func.upload(req,res,function(err,file){
+    if(err){return res.send(err)};
+
+    //if no error, store in image table
+    Image.sync({force:true})
+    .then(function(){
+        return Image.create({
+          item_id : item_id,
+          image  : req.file.key
+        })
+    })
+    .then(function(){
+        return res.send(`Image has been uploaded successfully and the file name is ${req.file.key}`);
+    }).catch(function(err){
+      return res.send(err);
+    })
+
+  })
+}
+
+
+//create new variant
+module.exports.createNewVariant = (req,res,next)=>{
+  const  item_id = req.query.item_id;
+  const  variant_id = item.generateId();
+  const  variant_num = item.generateItemNumber();
+
+  Variant.sync({force:true})
+  .then(()=>{
+    return Variant.create({
+       item_id : item_id,
+       variant_id : variant_id,
+       variant_num : variant_num
+    })
+    .then(()=>{
+      return res.send("Variant created successfully");
+    })
+    .catch((err)=>{
+      return res.send(err);
+    })
+  })
+
+}
+
+//crate new variant image
+module.exports.updateVariantImages = (req,res,next)=>{
+  const variant_id = req.query.variant_id;
+  s3func.upload(req,res,function(err,file){
+    if(err){return res.send(err)};
+
+    //if no error, store in image table
+    Variant_Image.sync({force:true})
+    .then(function(){
+        return Variant_Image.create({
+          variant_id : variant_id,
+          image  : req.file.key
+        })
+    })
+    .then(function(){
+        return res.send(`Varinat Image has been uploaded successfully and the file name is ${req.file.key}`);
+    }).catch(function(err){
+      return res.send(err);
+    })
+
+  })
+
+}
+
+
+//delete routes
+
+//delete item image
+module.exports.deleteItemImage = (req,res,next)=>{
+  const image = req.query.image;
+  const item_id = req.query.item_id;
+
+
+ const  params = {
+  Bucket: process.env.S3_BUCKET,
+  Key: image
+ };
+
+ s3func.s3.deleteObject(params, function(err, data) {
+  if(err){
+    return res.send(err);
+  }else{
+    Image.destroy({where:{item_id:item_id,image:image}})
+    .then(()=>{
+      return res.send("Image successfully deleted");
+    })
+  }
+});
+
+}
+
+
+//delete item image
+module.exports.deleteVariantImage = (req,res,next)=>{
+  const image = req.query.image;
+  const variant_id = req.query.variant_id;
+
+
+ const  params = {
+  Bucket: process.env.S3_BUCKET,
+  Key: image
+ };
+
+ s3func.s3.deleteObject(params, function(err, data) {
+  if(err){
+    return res.send(err);
+  }else{
+    Variant_Image.destroy({where:{variant_id:variant_id,image:image}})
+    .then(()=>{
+      return res.send(" Variant Image successfully deleted");
+    })
+  }
+});
+
 }
