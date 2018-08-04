@@ -44,7 +44,8 @@ router.delete('/items/:item_id/variants/:variant_id/images',itemController.delet
 //delete item
 router.delete('/items/:item_id',itemController.deleteItem);
 
-
+//delete variants
+router.delete('/items/:item_id/variants/:variant_id',itemController.deleteVariant);
 //update items
 
 //update item price
@@ -71,6 +72,24 @@ router.put('/items/:item_id/activate',itemController.activateItem);
 
 //deactivate item
 router.put('/items/:item_id/deactivate',itemController.deactivateItem);
+
+
+//============UPDATE ITEM ROUTES=======================
+//update variant color
+router.put('/items/:item_id/variants/:variant_id/color',itemController.updateVariantColor)
+
+//update variant name
+router.put('/items/:item_id/variants/:variant_id/name',itemController.updateVariantName)
+
+//update variant name
+router.put('/items/:item_id/variants/:variant_id/color_type',itemController.updateVariantColortype)
+
+//activate
+router.put('/items/:item_id/variants/:variant_id/activate',itemController.activateVariant)
+
+//deactivate
+router.put('/items/:item_id/variants/:variant_id/deactivate',itemController.deactivateVariant)
+
 
 // router.put('/items/:item_id/descriptions/images',itemController.updateItemImages);
 module.exports = router;

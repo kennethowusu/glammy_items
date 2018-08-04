@@ -178,6 +178,7 @@ module.exports.createNewVariant = (req,res,next)=>{
 
 //crate new variant image
 module.exports.updateVariantImages = (req,res,next)=>{
+  const item_id  = req.params.item_id;
   const variant_id = req.params.variant_id;
   s3func.upload(req,res,function(err,file){
     if(err){return res.send(err)};
@@ -186,6 +187,7 @@ module.exports.updateVariantImages = (req,res,next)=>{
     Variant_Image.sync({force: false})
     .then(function(){
         return Variant_Image.create({
+          item_id : item_id,
           variant_id : variant_id,
           image  : req.file.key
         })
@@ -376,9 +378,63 @@ module.exports.deleteItem = (req,res,next)=>{
 }
 
 
+//delete variant
+module.exports.deleteVariant  = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+
+
+  Variant_Image.findAll({where:{variant_id:variant_id}})
+  .then(function(variantimages){
+      const variantImages = [];
+      const imagesArray = [];
+      variantimages.forEach(function(vimages){
+        variantImages.push(vimages.image);
+
+      })//forEach
+
+      variantImages.forEach(function(vImages){
+        imagesArray.push({"Key":vImages});
+      })
+
+      return imagesArray;
+  })
+  .then(function(returnedvariantimages){
+    //images founded and s3 format created
+    //delete variant images
+      Variant_Image.destroy({where:{variant_id:variant_id}})
+      .then(function(){
+          //delete variant
+          Variant.destroy({where:{variant_id:variant_id}})
+          .then(function(){
+
+            //delete from se
+            const params = {
+             Bucket: process.env.S3_BUCKET,
+             Delete: {
+              Objects: returnedvariantimages
+             }};
+
+
+             s3func.s3.deleteObjects(params, function(err, data){
+               if(err){return res.send(err)
+               }else{
+                 return res.send("All done");
+             }
+           })//s3func
+          })//variant destroy
+
+
+
+      })//variant image
+    //delete images
+    //delete from s3
+
+
+  })
+
+}
+
 //============UPDATE ITEM==========================//
-
-
 //update Item price
 module.exports.updateItemName = (req,res,next)=>{
   const item_id = req.params.item_id;
@@ -533,6 +589,103 @@ module.exports.deactivateItem = (req,res,next)=>{
   })
   .then(()=>{
       return res.send("Item deactivated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+//=================UPDATE ITEM DONE==============//
+
+//==================UPDATE VARIANT ==============//
+
+module.exports.updateVariantName = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+  const name = req.query.name;
+
+  Variant.update({
+    name : name,
+  }, {
+    where: {
+      variant_id : variant_id
+    }
+  })
+  .then(()=>{
+      return res.send("Variant Name updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+//update variant color
+module.exports.updateVariantColor = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+  const color = req.query.color;
+
+  Variant.update({
+    color : color,
+  }, {
+    where: {
+      variant_id : variant_id
+    }
+  })
+  .then(()=>{
+      return res.send("Variant Color updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+//update variant color type
+module.exports.updateVariantColortype = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+  const color_type = req.query.color_type;
+
+  Variant.update({
+    color_type : color_type,
+  }, {
+    where: {
+      variant_id : variant_id
+    }
+  })
+  .then(()=>{
+      return res.send("Variant Color type  updated successfully");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+
+//activate variant
+module.exports.activateVariant = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+
+  Variant.update({
+    is_active : "yes",
+  }, {
+    where: {
+      variant_id : variant_id
+    }
+  })
+  .then(()=>{
+      return res.send("Variant successfully activated");
+    }).catch((err)=>{
+      return res.send(err);
+    })
+}
+
+//activate variant
+module.exports.deactivateVariant = (req,res,next)=>{
+  const variant_id = req.params.variant_id;
+
+  Variant.update({
+    is_active : "no",
+  }, {
+    where: {
+      variant_id : variant_id
+    }
+  })
+  .then(()=>{
+      return res.send("Variant successfully deactivated");
     }).catch((err)=>{
       return res.send(err);
     })
