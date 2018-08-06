@@ -89,6 +89,6 @@ grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-browser-sync');
 
 
-grunt.registerTask('default', ['browserSync','watch']);
+grunt.registerTask('default', ['watch']);
 grunt.registerTask('call_sass', 'sass');
 }

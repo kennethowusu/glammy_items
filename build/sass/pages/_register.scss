@@ -1,0 +1,56 @@
+
+.toggle-password{
+  top: 29px;
+  right: 10px;
+  text-decoration: underline;
+  display:none;
+  z-index: 14;
+}
+.line-behind{
+  border:1px solid #000;
+  display:flex;
+  justify-content: center;
+
+}
+.line-behind--front{
+  background-color:#fff;
+  top: -11px;
+  padding: 0 20px;
+  }
+.ripple{
+  overflow:hidden;
+}
+.ripple::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:50px;
+    height:50px;
+    background:rgba(255, 255, 255, .5);
+    border-radius:100%;
+    z-index:40;
+    opacity:0;
+    margin-left:-25px;
+}
+
+@keyframes ripple{
+   0%{
+     transform:scale(0,0);
+     opacity:1;
+   }
+
+   20%{
+     transform:scale(15,15);
+     opacity:1;
+   }
+
+   100%{
+     opacity:1;
+     transform:scale(40,40)
+   }
+ }
+.ripple:focus:not(:active)::after{
+  animation:ripple 1s ease-in-out both;
+
+}

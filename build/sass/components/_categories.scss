@@ -1,0 +1,31 @@
+.categories{
+  @media(min-width:740px){
+    display:flex;
+    justify-content: space-between;
+  }
+
+  @media(min-width:1010px){
+    margin-left:290px;
+  }
+}
+
+.categories-block{
+  flex-grow:1;
+  padding:15px;
+}
+.categories__text{
+  font-size:1em;
+}
+
+.categories__link{
+  font-weight:$font-weight--bold;
+  color:$french-rose;
+  background:url("../images/svg/right-angled-arrow.svg") 100% no-repeat;
+  display: inline-block;
+  width: 95px;
+  background-position: 100% 6px;
+  background-size: 11px 12px;
+  &:hover{
+    color:$french-rose;
+  }
+}

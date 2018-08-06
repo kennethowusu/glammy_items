@@ -1,0 +1,40 @@
+// color variables
+
+
+
+//font stack
+
+$google-font--ptsans        :'pt sans';
+
+$font-family--primary       :'Pt sans',Helvetica,Arial,Sans-serif;
+
+
+
+//font weights
+$font-weight--thin          :100;
+$font-weight--light         :300;
+$font-weight--medium        :400;
+$font-weight--bold        :700;
+$font-weight--ultra-bold    :900;
+
+//Descriptive Base Colors
+ $white        :fff;
+ $red          :#FF0303;
+ $persian-red  :#CC3030;
+ $alto         :#CECECE;
+ $black        :#000;
+ $au-chico     :#A25F5F;
+ $maroona-Oak  :#4E0C0C;
+ $cinnabar     :#E84234;
+ $outrageous-orange: #FF653A;
+ $french-rose   :#EF426C;
+ $hurricane     :#847979;
+ $don-juan      :#614949;
+
+ //Color usage
+  // $color-primary:#EF426C;
+  // $color-secondary:#EF426C;
+  // $color-accent:
+  $color-shadow:  rgba($black,0.16);
+  $color-transparent  :rgba($don-juan,0.63);
+//break-point variables

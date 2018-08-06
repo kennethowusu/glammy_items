@@ -1,0 +1,21 @@
+
+body{
+  font-family:$font-family--primary;
+  overflow-x:hidden;
+
+}
+li{
+  list-style-type:none;
+}
+
+*:focus{
+  outline:0;
+}
+
+a:hover{
+  text-decoration:none;
+}
+ul{
+  margin:0;
+  padding:0;
+}

@@ -14,6 +14,22 @@ const s3func = require('../functions/s3func');
 
 //require dot env
 require('dotenv').config();
+
+
+//GET ALL ITEMS
+module.exports.getAllItems = (req,res,next)=>{
+  return res.render('index',{title: "Upload Items"});
+}
+
+//GET NEW ITEM FORM
+module.exports.getNewItemForm = (req,res,next)=>{
+  return res.render('newitem',{title: "Add new Item"});
+}
+
+//GET MEW ITEM DESCRIPTION
+module.exports.getNewItemDescription = (req,res,next)=>{
+  return res.render('itemdescription');
+}
 //add new item
 module.exports.addNewItem = function(req, res, next) {
 

@@ -8,6 +8,18 @@ var itemController = require('../controllers/itemsController');
 const s3func = require('../functions/s3func');
 //get all items
 
+//===================================//
+//=========GET ROUTES===============//
+
+//get all routes
+router.get('/',itemController.getAllItems);
+
+//get item new form
+router.get('/items/new',itemController.getNewItemForm);
+
+
+//get new item description
+router.get('/items/:item_id/descriptions/',itemController.getNewItemDescription)
 
 //create new item
 router.post('/items',itemController.addNewItem);

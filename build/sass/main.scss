@@ -1,0 +1,36 @@
+
+
+//import vendors styles
+
+
+
+//import utils styles
+@import 'utils/variables',
+        'utils/helpers';
+
+
+
+//import base styles
+@import 'base/reset',
+        'base/typography';
+
+
+//import layout styles
+
+
+//
+//import component styles
+  @import 'components/buttons',
+          'components/header',
+          'components/banner-carousel',
+          'components/navbar',
+          'components/categories',
+          'components/item-grid',
+          'components/form-input';
+
+  //import pages styles
+  @import 'pages/home',
+          'pages/register';
+
+
+  @import 'layout/footer';

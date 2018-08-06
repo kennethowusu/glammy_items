@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.015 20.063">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ef426c;
+      }
+    </style>
+  </defs>
+  <path id="righ_angled_triangle" data-name="righ angled  triangle" class="cls-1" d="M47.9,988.019a1.241,1.241,0,0,0-.3-.685l-7.444-8.684a1.241,1.241,0,1,0-1.874,1.6l6.759,7.883-6.759,7.883a1.241,1.241,0,1,0,1.874,1.6l7.444-8.684A1.241,1.241,0,0,0,47.9,988.019Z" transform="translate(-37.892 -978.103)"/>
+</svg>
