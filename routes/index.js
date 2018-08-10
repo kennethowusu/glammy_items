@@ -41,6 +41,8 @@ router.put('/items/:item_id/descriptions/images',itemController.updateItemImages
 //create new item variant
 router.get('/items/:item_id/variants/new',itemController.createNewVariant);
 
+ //get new variant
+ router.get('/items/:item_id/variants/:variant_id',itemController.getNewVariant);
 //create variant image
 router.put('/items/:item_id/variants/:variant_id/images',itemController.updateVariantImages);
 

@@ -15,6 +15,10 @@ const s3func = require('../functions/s3func');
 //require dot env
 require('dotenv').config();
 
+//=====================GET ROUTES===================//
+
+
+
 
 //GET ALL ITEMS
 module.exports.getAllItems = (req,res,next)=>{
@@ -28,7 +32,13 @@ module.exports.getNewItemForm = (req,res,next)=>{
 
 //GET MEW ITEM DESCRIPTION
 module.exports.getNewItemDescription = (req,res,next)=>{
-  return res.render('itemdescription');
+  return res.render('itemdescription',{title:"Item description"});
+}
+
+
+//GET NEW VARIANT
+module.exports.getNewVariant = (req,res,next)=>{
+  return res.render('itemvariant',{title:"Item Variant"});
 }
 //add new item
 module.exports.addNewItem = function(req, res, next) {
@@ -183,7 +193,7 @@ module.exports.createNewVariant = (req,res,next)=>{
        variant_num : variant_num
     })
     .then(()=>{
-      return res.send("Variant created successfully");
+      return res.redirect(`/items/${item_id}/variants/variant_id`,{title:"Item Variant"});
     })
     .catch((err)=>{
       return res.send(err);
