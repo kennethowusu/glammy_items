@@ -35,19 +35,12 @@ module.exports = function(grunt){
      // separator: ';',
    },
    dist: {
-     src: ['build/coffee/navigation.coffee', 'build/coffee/some.coffee', 'build/coffee/another.coffee'],
-     dest: 'build/coffee/main.coffee',
+     src: ['build/scripts/*'],
+     dest: 'public/javascripts/main.js',
    },
  },
 
-  //process coffeescript to js
-  coffee:{
-    compile:{
-      files:{
-        'public/javascripts/main.js':'build/coffee/main.coffee'
-      }
-    }
-  },
+
   //watch tasks
   watch: {
     options:{
@@ -57,9 +50,9 @@ module.exports = function(grunt){
       files: ['build/sass/**/*'],
       tasks: ['sass','autoprefixer']
     },
-    coffee:{
-      files:['build/coffee/**/*'],
-      tasks:['concat','coffee']
+    javascripts:{
+      files:['build/scripts/*.js'],
+      tasks:['concat']
     }
 
   },

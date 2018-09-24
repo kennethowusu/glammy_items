@@ -1,25 +1,27 @@
 <%- include('header')-%>
-<script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </header>
     <body>
-      <div class="update-notice">
+      <div class="update-notice saving">
+        Saving
+      </div>
+      <div class="update-notice saved">
         About item field updated successfully!
       </div>
       <div class="fields">
            <p class="underline text-center bold">Item Description</p>
 
-            <div class="input-group-field">
-              <label for="" class="form-label ">About Item</label>
-              <textarea name="name"id="about" rows="8" class="form-input control">About item here...</textarea>
-            </div>
+              <div class="input-group-field" id="about-field">
+                <label for="" class="form-label ">About Item</label>
+                <textarea name="name"id="about" rows="8" class="form-input control">About item here...</textarea>
+              </div>
 
-            <div class="input-group-field">
+            <div class="input-group-field" id='ingredients-field'>
               <label for="" class="form-label ">Ingredients</label>
-              <textarea name="name"id="ingredients" rows="8" class="form-input control">Item ingredients here...</textarea>
+              <textarea name="name" id="ingredients" rows="8" class="form-input control">Item ingredients here...</textarea>
             </div>
 
-            <div class="input-group-field">
-              <label for="" class="form-label ">About Item</label>
+            <div class="input-group-field" id='how_to_use-field'>
+              <label for="" class="form-label ">Item Description</label>
               <textarea name="name" id="how_to_use" rows="8" class="form-input control">Description of item here...</textarea>
             </div>
 
@@ -77,58 +79,31 @@
               </div>
             </div>
           </div>
+          <div class="">
+            <input type="hidden" name='' id='item_id' value=<%=item_id%>>
+          </div>
           <script type="text/javascript"`>
-          var about;
-          var how_to_use;
-          var ingredients;
-          var image = document.getElementById('image');
-
-            ClassicEditor
-            .create( document.querySelector( '#about' ) )
-                .then( editor => {
-                  about = editor;
-                } )
-                .catch( error => {
-                  console.error( error );
-            } );
-
-            ClassicEditor
-            .create( document.querySelector( '#how_to_use' ) )
-                .then( editor => {
-                    how_to_use = editor;
-                } )
-                .catch( error => {
-                    console.error( error );
-            } );
-
-            ClassicEditor
-              .create( document.querySelector( '#ingredients' ) )
-                  .then( editor => {
-                      ingredients = editor;
-                  } )
-                  .catch( error => {
-                      console.error( error );
-    } );
 
 
 
-            //FOR IMAGES
-            image.onchange = function(){
-            var formdata = new FormData();
-            var files = image.files;
-            var file = files[0];
-            formdata.append('image',file);
-            //
-            // if(this.dataset.type == 'parent'){
-            // uploadImage(formdata,file.name);
-            //  }else{
-            //  uploadVariantImage(formdata,file.name);
-            //  }
-            console.log(formdata);
-            }
-          $('body').on('click',function(){
-            console.log(about.getData())
-          })
+          //   //FOR IMAGES
+          //   image.onchange = function(){
+          //   var formdata = new FormData();
+          //   var files = image.files;
+          //   var file = files[0];
+          //   formdata.append('image',file);
+          //   //
+          //   // if(this.dataset.type == 'parent'){
+          //   // uploadImage(formdata,file.name);
+          //   //  }else{
+          //   //  uploadVariantImage(formdata,file.name);
+          //   //  }
+          //   console.log(formdata);
+          //   }
+          // $('body').on('click',function(){
+          //   console.log(about.getData())
+          // })
           </script>
+          <script type="text/javascript" src="/javascripts/main.js"></script>
     </body>
   </html>

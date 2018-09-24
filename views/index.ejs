@@ -20,49 +20,10 @@
 
     <div class="items">
 
-      <div class="item-grid">
-         <div class="">
-           <div class="item-grid__img-cont">
-             <img src="/images/rasta/item1.jpg" alt="" class="item-grid__img w-100">
-           </div>
-         </div>
-         <div class="item-grid-desc">
-           <p class="item-grid-desc__name bold">
-             Sed ut perspiciatis unde omnis iste natus
-           </p>
-           <p class="item-grid-desc__price">
-             Price: <span class="bold">50.00</span>
-           </p>
-           <p class="item-grid-desc__variantnum">
-             No of Variants: <span class="bold">0</span>
-           </p>
-         </div>
-
-         <div>
-           <ul class="action mr-20 mb-20">
-             <li class="action_item rel ">Item
-                <ul class="action_dropdown abs">
-                  <li class="view action_dropdown-list"><a href="#">View</a></li>
-                  <li class="edit action_dropdown-list"><a href="#">Edit</a></li>
-                  <li class="trash action_dropdown-list"><a href="#">Delete</a></li>
-                </ul>
-             </li>
-           </ul>
-
-           <ul class="action mb-20">
-             <li class="action_item rel ">Variant
-                <ul class="action_dropdown abs">
-                  <li class="view action_dropdown-list"><a href="#">View</a></li>
-                  <li class="edit action_dropdown-list"><a href="#">Edit</a></li>
-                  <li class="trash action_dropdown-list "><a href="#">Delete</a></li>
-                </ul>
-             </li>
-           </ul>
-         </div>
-      </div>
 
 
-         <div class="item-grid">
+      <% items.forEach((item)=>{%>
+        <div class="item-grid">
            <div class="">
              <div class="item-grid__img-cont">
                <img src="/images/rasta/item1.jpg" alt="" class="item-grid__img w-100">
@@ -85,24 +46,33 @@
                <li class="action_item rel ">Item
                   <ul class="action_dropdown abs">
                     <li class="view action_dropdown-list"><a href="#">View</a></li>
-                    <li class="edit action_dropdown-list"><a href="#">Edit</a></li>
+                    <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/descriptions`%>>Edit Description</a></li>
+                    <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/edit/details`%>>Edit Detail</a></li>
                     <li class="trash action_dropdown-list"><a href="#">Delete</a></li>
                   </ul>
                </li>
              </ul>
 
-             <ul class="action">
+             <ul class="action mb-20">
                <li class="action_item rel ">Variant
                   <ul class="action_dropdown abs">
                     <li class="view action_dropdown-list"><a href="#">View</a></li>
-                    <li class="edit action_dropdown-list"><a href="#">Edit</a></li>
+                    <li class="edit action_dropdown-list"><a href="">Edit</a></li>
                     <li class="trash action_dropdown-list "><a href="#">Delete</a></li>
                   </ul>
                </li>
              </ul>
            </div>
-       </div>
+        </div>
+
+      <%});%>
+
+
+
    </div>
+
+
+
   </body>
 
 

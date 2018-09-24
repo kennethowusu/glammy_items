@@ -595,6 +595,7 @@ ul {
   width: 100%;
   top: 0;
   left: 0;
+  display: none;
 }
 
 .fields {
@@ -614,11 +615,11 @@ ul {
 }
 
 .form-input {
-  border: 1px solid #D4CFCF;
-  border-radius: 4px;
-  font-size: 1em;
-  padding: 5px;
+  padding: 4px 10px;
+  border: 1px solid #c5c5c5;
+  margin-bottom: 10px;
   outline: 0;
+  height: 42px;
 }
 .form-input:focus, .form-input:hover {
   border: 1px solid #03a9f4;

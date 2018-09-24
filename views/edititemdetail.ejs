@@ -1,0 +1,55 @@
+<%- include('header')-%>
+</header>
+<body>
+  <div class="update-notice saving">
+    Saving
+  </div>
+  <div class="update-notice saved">
+    About item field updated successfully!
+  </div>
+  <div class="fields">
+       <p class="underline text-center bold">Add New Item</p>
+      <form class="" >
+        <div class="input-group-field">
+          <label for="" class="form-label ">Name</label>
+          <input type="text" name="name"  attr-name="name" id="name" class="form-input control email">
+        </div>
+        <div class="input-group-field">
+          <label for="" class="form-label ">Price</label>
+          <input type="text" name="price"  attr-name="name" id="price"  class="form-input control email">
+        </div>
+        <div class="input-group-field">
+          <label for="" class="form-label ">Original Price</label>
+          <input type="text" name="original_price"  attr-name="name"  id="original_price" class="form-input control email">
+        </div>
+        <div class="input-group-field">
+
+          <select  name="main_category"  attr-name="name"  id="main_category" class="form-input control email">
+            <option value="">Select Item Main Category</option>
+            <option value="option_two">Option two</option>
+          </select>
+        </div>
+        <div class="input-group-field">
+
+          <select  name="sub_category"  attr-name="name"  id="sub_category" class="form-input control email">
+            <option value="">Select Item SubCategory</option>
+            <option value="sub_option_two">Option two</option>
+          </select>
+        </div>
+        <div class="input-group-field">
+
+          <select  name="category"  attr-name="name"  id="category" class="form-input control email">
+            <option value="">Select Item Category</option>
+            <option value="category_option_two">Option two</option>
+          </select>
+        </div>
+
+
+      </form>
+    </div>
+    <div class="">
+      <input type='hidden' id="item_id" value=<%=item_id%>
+    </div>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
+  </body>
+  </html>

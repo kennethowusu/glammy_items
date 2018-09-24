@@ -22,7 +22,11 @@ require('dotenv').config();
 
 //GET ALL ITEMS
 module.exports.getAllItems = (req,res,next)=>{
-  return res.render('index',{title: "Upload Items"});
+  Item.findAll()
+  .then((items)=>{
+     console.log(items);
+     return res.render('index',{title: "Upload Items",items:items});
+  });
 }
 
 //GET NEW ITEM FORM
@@ -32,7 +36,7 @@ module.exports.getNewItemForm = (req,res,next)=>{
 
 //GET MEW ITEM DESCRIPTION
 module.exports.getNewItemDescription = (req,res,next)=>{
-  return res.render('itemdescription',{title:"Item description"});
+  return res.render('itemdescription',{title:"Item description",item_id: req.params.item_id});
 }
 
 
@@ -81,22 +85,21 @@ module.exports.addNewItem = function(req, res, next) {
 
         })
         .then((description) => {
-          return res.send("item and its description created");
+          return res.redirect(`items/${newItem.id}/descriptions`);
         })//descripton then
         .catch((err)=>{
           res.send(err);
         })//description catch
     })
     .catch(err => {
-      return res.send(err);
+      return res.redirect(err);
     })
 }
 
 //update Item about
 module.exports.updateAbout = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const about = req.query.about;
-
+  const about = req.body.about;
   Description.update({
     about : about,
   }, {
@@ -109,13 +112,17 @@ module.exports.updateAbout = (req,res,next)=>{
     }).catch((err)=>{
       return res.send(err);
     })
+
 }
 
+module.exports.getEditItemDetail = (req,res,next)=>{
+  return res.render('edititemdetail',{title:"Edit Item Detail",item_id:req.params.item_id});
+}
 
 //update Item ingredients
 module.exports.updateIngredients = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const ingredients = req.query.ingredients;
+  const ingredients = req.body.ingredients;
 
   Description.update({
     ingredients : ingredients,
@@ -135,7 +142,7 @@ module.exports.updateIngredients = (req,res,next)=>{
 //update Item how_to_use
 module.exports.updateHow_to_use = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const how_to_use = req.query.how_to_use
+  const how_to_use = req.body.how_to_use
 
   Description.update({
     how_to_use : how_to_use,
@@ -464,7 +471,7 @@ module.exports.deleteVariant  = (req,res,next)=>{
 //update Item price
 module.exports.updateItemName = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const name = req.query.name
+  const name = req.body.name;
 
   Item.update({
     name : name,
@@ -474,17 +481,18 @@ module.exports.updateItemName = (req,res,next)=>{
     }
   })
   .then(()=>{
-      return res.send("Price to use about updated successfully");
+      return res.send("Price updated successfully");
     }).catch((err)=>{
       return res.send(err);
     })
+
 }
 
 
 //update Item price
 module.exports.updateItemPrice = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const price = req.query.price
+  const price = req.body.price;
 
   Item.update({
     price : price,
@@ -504,7 +512,7 @@ module.exports.updateItemPrice = (req,res,next)=>{
 //update Item original_price
 module.exports.updateItemOriginalPrice = (req,res,next)=>{
   const item_id = req.params.item_id;
-  const original_price = req.query.original_price
+  const original_price = req.body.original_price
 
   Item.update({
     original_price :original_price,
