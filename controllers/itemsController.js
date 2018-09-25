@@ -167,7 +167,7 @@ module.exports.updateItemImages = (req,res,next)=>{
 
   s3func.upload(req,res,function(err,file){
     if(err){return res.send(err)};
-
+   console.log(req.file)
     //if no error, store in image table
     Image.sync({force: false})
     .then(function(){
@@ -177,12 +177,13 @@ module.exports.updateItemImages = (req,res,next)=>{
         })
     })
     .then(function(){
-        return res.send(`Image has been uploaded successfully and the file name is ${req.file.key}`);
+        return res.send(req.file.key);
     }).catch(function(err){
       return res.send(err);
     })
 
   })
+
 }
 
 

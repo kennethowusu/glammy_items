@@ -2,6 +2,9 @@ var about;
 var how_to_use;
 var ingredients;
 var item_id = $('#item_id').val();
+var variant_id = $('#variant_id').val();
+var image =  document.getElementById('image');
+
 // var image = document.getElementById('image');
 
 ClassicEditor.create(document.querySelector('#about')).then(editor => {
@@ -142,4 +145,76 @@ function showSaved() {
   if ($('.saved').is(':visible')) {
     $('.saved').fadeOut(4000);
   }
+}
+
+
+//==================UPLOAD IMAGE ==================//
+
+image.onchange = ()=>{
+  var formdata = new FormData();
+  var files = image.files;
+  var file = files[0];
+  formdata.append('image',file);
+
+  if(image.dataset.type == 'parent'){
+  updateItemImages(formdata,file.name);
+   }else{
+   updateVariantImages(formdata,file.name);
+   }
+
+}
+
+
+ const updateItemImages = (formdata,file)=>{
+   const url = `/items/${item_id}/descriptions/images`;
+     var xhr = new XMLHttpRequest();
+     xhr.open('put',url);
+     xhr.onreadystatechange = function(){
+       $('.image-upload-progress').css('display','flex');
+       if(xhr.readyState == 4 && xhr.status == 200){
+         $('.image-upload-progress').css('display','none');
+         var result = xhr.responseText;
+         appendItemImage(result);
+         // // addImageToProduct(product_id,result.key);
+         // var image = $('<div class="image-preview"> <div class="image-preview__img"><img src="'+result.location+'" alt="" class="control"></div><div class="image-preview__action"><input class="image_key" type="hidden" value="'+result.key+'"><input class="image_id" type="hidden" value="'+result.image_id+'"><button  type="button" class="image-preview__btn">Delete photo</button></div></div>');
+         // $('.uploaded-photos').append(image);
+
+       }
+     }
+     xhr.send(formdata);
+ }
+
+ const updateVariantImages = (formdata,file)=>{
+   const url = `'/items/${item_id}/variants/${variant_id}/images`;
+     var xhr = new XMLHttpRequest();
+     xhr.open('put',url);
+     xhr.onreadystatechange = function(){
+       $('.image-upload-progress').css('display','flex');
+       if(xhr.readyState == 4 && xhr.status == 200){
+         $('.image-upload-progress').css('display','none');
+         var result = xhr.responseText;
+         appendItemImage(result);
+         // // addImageToProduct(product_id,result.key);
+         // var image = $('<div class="image-preview"> <div class="image-preview__img"><img src="'+result.location+'" alt="" class="control"></div><div class="image-preview__action"><input class="image_key" type="hidden" value="'+result.key+'"><input class="image_id" type="hidden" value="'+result.image_id+'"><button  type="button" class="image-preview__btn">Delete photo</button></div></div>');
+         // $('.uploaded-photos').append(image);
+
+       }
+     }
+     xhr.send(formdata);
+ }
+
+
+//append uploaded images to item descriptions
+const appendItemImage = (image_key)=>{
+  let html = `
+    <div class="uploaded-image flex">
+          <div class="uploaded-image__img__cont">
+            <img src="https://s3.eu-west-2.amazonaws.com/glammycare/${image_key}" alt="" class="w-100 ">
+          </div>
+          <div class="flex align-items-center">
+            <img src="/images/svg/cancel.svg" alt="" class="uploaded-image__cancel pointer">
+            <p class="pointer">Delete</p>
+          </div>
+        </div>`;
+    $('.image-upload').append(html);
 }
