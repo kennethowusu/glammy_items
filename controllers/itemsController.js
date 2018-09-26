@@ -128,7 +128,13 @@ module.exports.updateAbout = (req,res,next)=>{
 }
 
 module.exports.getEditItemDetail = (req,res,next)=>{
-  return res.render('edititemdetail',{title:"Edit Item Detail",item_id:req.params.item_id});
+  const item_id =  req.params.item_id;
+  Item.find({
+    where:{id:item_id}
+  }).then((item)=>{
+    return res.render('edititemdetail',{title:"Edit Item Detail",item_id:item_id,item:item});
+  })
+
 }
 
 //update Item ingredients
