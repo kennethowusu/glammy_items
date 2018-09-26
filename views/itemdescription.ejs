@@ -12,17 +12,17 @@
 
               <div class="input-group-field" id="about-field">
                 <label for="" class="form-label ">About Item</label>
-                <textarea name="name"id="about" rows="8" class="form-input control">About item here...</textarea>
+                <textarea name="name"id="about" rows="8" class="form-input control"><%=description.about%></textarea>
               </div>
 
             <div class="input-group-field" id='ingredients-field'>
               <label for="" class="form-label ">Ingredients</label>
-              <textarea name="name" id="ingredients" rows="8" class="form-input control">Item ingredients here...</textarea>
+              <textarea name="name" id="ingredients" rows="8" class="form-input control"><%=description.ingredients%></textarea>
             </div>
 
             <div class="input-group-field" id='how_to_use-field'>
               <label for="" class="form-label ">Item Description</label>
-              <textarea name="name" id="how_to_use" rows="8" class="form-input control">Description of item here...</textarea>
+              <textarea name="name" id="how_to_use" rows="8" class="form-input control"><%=description.how_to_use%></textarea>
             </div>
 
             <div class="input-group-field mt-20">
@@ -58,17 +58,22 @@
             </div>
           </form>
           <p class="underline text-center bold">Images</p>
+          <div class="item-uploaded-images">
           <div class="image-upload">
-            <div class="uploaded-image flex">
-              <div class="uploaded-image__img__cont">
-                <img src="/images/rasta/item1.jpg" alt="" class="w-100 ">
-              </div>
-              <div class="flex align-items-center">
-                <img src="/images/svg/cancel.svg" alt="" class="uploaded-image__cancel pointer">
-                <p class="pointer">Delete</p>
-              </div>
-            </div>
-
+            <%if(images){%>
+              <%images.forEach((image)=>{%>
+                <div class="uploaded-image flex">
+                  <div class="uploaded-image__img__cont">
+                    <img src="<%=`https://s3.eu-west-2.amazonaws.com/glammycare/${image.image}`%>" image_id="<%=image.image%>" alt="" class="w-100 ">
+                  </div>
+                  <div class="flex align-items-center">
+                    <img src="/images/svg/cancel.svg" alt=""  class="uploaded-image__cancel pointer">
+                    <p class="pointer">Delete</p>
+                  </div>
+                </div>
+             <%})%>
+            <%}%>
+          </div>
 
           </div>
           <div class="">

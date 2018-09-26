@@ -212,9 +212,30 @@ const appendItemImage = (image_key)=>{
             <img src="https://s3.eu-west-2.amazonaws.com/glammycare/${image_key}" alt="" class="w-100 ">
           </div>
           <div class="flex align-items-center">
-            <img src="/images/svg/cancel.svg" alt="" class="uploaded-image__cancel pointer">
+            <img src="/images/svg/cancel.svg" alt="" image_id="${image_key}" class="uploaded-image__cancel pointer">
             <p class="pointer">Delete</p>
           </div>
         </div>`;
     $('.image-upload').append(html);
+}
+
+//======================DELETE IMAGE ===========================//
+
+$('.image-upload').on('click','.uploaded-image__cancel ',(e)=>{
+  let image_id = $(e.target).attr('image_id');
+  let domImage = $(e.target).parents('.uploaded-image');
+  if($(e.target).parents().is('.item-uploaded-images')){
+    deleteItemImage(image_id,domImage);
+  }
+})
+const deleteItemImage = (image_id,domImage)=>{
+  let url = `/items/${item_id}/descriptions/images`;
+  let data = {image:image_id};
+  $.ajax({
+    type:'delete',
+    url:url,
+    data:data
+  }).done(()=>{
+     domImage.remove();
+  })
 }

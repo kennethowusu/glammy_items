@@ -36,7 +36,19 @@ module.exports.getNewItemForm = (req,res,next)=>{
 
 //GET MEW ITEM DESCRIPTION
 module.exports.getNewItemDescription = (req,res,next)=>{
-  return res.render('itemdescription',{title:"Item description",item_id: req.params.item_id});
+  const item_id = req.params.item_id;
+  Item.find({
+    where:{id:item_id},
+    include:[
+      {model:Image,where:{item_id:item_id},required:false},
+      {model:Description,where:{item_id:item_id}}
+    ]
+  }).then((item)=>{
+    console.log(item.description);
+    return res.render('itemdescription',{title:"Item description",item_id:item_id,description:item.description,images:item.images });
+  })
+
+
 }
 
 
@@ -241,7 +253,7 @@ module.exports.updateVariantImages = (req,res,next)=>{
 
 //delete item image
 module.exports.deleteItemImage = (req,res,next)=>{
-  const image = req.query.image;
+  const image = req.body.image;
   const item_id = req.params.item_id;
 
 
@@ -260,6 +272,7 @@ module.exports.deleteItemImage = (req,res,next)=>{
     })
   }
 });
+
 
 }
 
