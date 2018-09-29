@@ -1,22 +1,26 @@
 <%- include('header')-%>
-<script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </header>
     <body>
-
+      <div class="update-notice saving">
+        Saving
+      </div>
+      <div class="update-notice saved">
+        Field Update was successfull!
+      </div>
       <div class="fields">
-           <p class="underline text-center bold">Variant Variant</p>
+           <p class="underline text-center bold">Variant</p>
 
            <div class="input-group-field">
              <label for="" class="form-label ">Variant Name</label>
-             <input type="text" name="name"  attr-name="name"  class="form-input control email">
+             <input type="text" name="name"  attr-name="name" id="variant_name" value="<%=variant.name%>" class="form-input control email">
            </div>
            <div class="input-group-field">
              <label for="" class="form-label ">Color</label>
-             <input type="text" name="name"  attr-name="name"  class="form-input control email">
+             <input type="text" name="name"  attr-name="name" id="variant_color" value="<%=variant.color%>"  class="form-input control email">
            </div>
            <div class="input-group-field">
 
-             <select  name="name"  attr-name="name"  class="form-input control email">
+             <select  name="name"  attr-name="name"  id="variant_color_type"class="form-input control email">
                <option value="">Select variant color type</option>
                <option value="">Option two</option>
              </select>
@@ -54,6 +58,11 @@
               <button type="submit"  class="form-input control form-btn--rounded form-input--rounded--cinnabar rel straight-edge">Add New Variant</button>
             </div>
           </form>
+          <div class="">
+            <input type="hidden" name="" id="item_id" value="<%=item_id%>">
+            <input type="hidden" name="" id="variant_id" value="<%=variant.variant_id%>">
+          </div>
+          <script type="text/javascript" src="/javascripts/main.js"></script>
 
 
     </body>

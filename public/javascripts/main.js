@@ -95,6 +95,11 @@ const updateHow_to_use = () => {
      updateItemOriginalPrice();
    })
 
+   // //item main_category
+   // $('').change(()=>{
+   //   updateItemMaincategory();
+   // })
+
 //update item name
 const updateItemName = ()=>{
   showSaving();
@@ -134,6 +139,8 @@ const updateItemOriginalPrice = ()=>{
     showSaved();
   })
 }
+
+// const updateItemMaincategory = ()=>{}
 //show notification
 
 function showSaving() {
@@ -237,5 +244,46 @@ const deleteItemImage = (image_id,domImage)=>{
     data:data
   }).done(()=>{
      domImage.remove();
+  })
+}
+
+
+//==================FOR ITEM VARIANT =======================//
+//update variant name
+$('#variant_name').change(()=>{
+
+  updateVariantName();
+})
+
+//update variant color
+$('#variant_color').change(()=>{
+  updateVariantColor();
+})
+const updateVariantName = ()=>{
+    showSaving();
+  let name = $('#variant_name').val();
+  let url  = `/items/${item_id}/variants/${variant_id}/name`;
+  let data = {name:name};
+  $.ajax({
+    url : url,
+    type:"put",
+    data : data
+  })
+  .done(()=>{
+    showSaved();
+  })
+}
+
+const updateVariantColor = ()=>{
+  showSaving();
+  let color = $('#variant_color').val();
+  let data = {color:color};
+  let url  = `/items/${item_id}/variants/${variant_id}/color`;
+  $.ajax({
+    type:'put',
+    url : url,
+    data:data
+  }).done(()=>{
+    showSaved();
   })
 }

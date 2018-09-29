@@ -49,11 +49,11 @@ module.exports = function(grunt){
     scss: {
       files: ['build/sass/**/*'],
       tasks: ['sass','autoprefixer']
-    },
-    javascripts:{
-      files:['build/scripts/*.js'],
-      tasks:['concat']
-    }
+     },
+    // javascripts:{
+    //   files:['build/scripts/*.js'],
+    //   tasks:['concat']
+    // }
 
   },
 

@@ -54,7 +54,18 @@ module.exports.getNewItemDescription = (req,res,next)=>{
 
 //GET NEW VARIANT
 module.exports.getNewVariant = (req,res,next)=>{
-  return res.render('itemvariant',{title:"Item Variant"});
+  const item_id = req.params.item_id;
+  const variant_id  = req.params.variant_id;
+  Variant.findOne({
+    where:{variant_id:variant_id},
+    include:[
+            {model:Variant_Image,where:{variant_id:variant_id},required:false}
+          ]
+  })
+  .then((variant)=>{
+    return res.render('itemvariant',{title:"Item Variant",variant:variant,item_id:item_id});
+  })
+
 }
 //add new item
 module.exports.addNewItem = function(req, res, next) {
@@ -219,7 +230,7 @@ module.exports.createNewVariant = (req,res,next)=>{
        variant_num : variant_num
     })
     .then(()=>{
-      return res.redirect(`/items/${item_id}/variants/variant_id`,{title:"Item Variant"});
+      return res.redirect(`/items/${item_id}/variants/${variant_id}`);
     })
     .catch((err)=>{
       return res.send(err);
@@ -653,7 +664,7 @@ module.exports.deactivateItem = (req,res,next)=>{
 
 module.exports.updateVariantName = (req,res,next)=>{
   const variant_id = req.params.variant_id;
-  const name = req.query.name;
+  const name = req.body.name;
 
   Variant.update({
     name : name,
@@ -666,13 +677,13 @@ module.exports.updateVariantName = (req,res,next)=>{
       return res.send("Variant Name updated successfully");
     }).catch((err)=>{
       return res.send(err);
-    })
+    });
 }
 
 //update variant color
 module.exports.updateVariantColor = (req,res,next)=>{
   const variant_id = req.params.variant_id;
-  const color = req.query.color;
+  const color = req.body.color;
 
   Variant.update({
     color : color,
@@ -686,6 +697,7 @@ module.exports.updateVariantColor = (req,res,next)=>{
     }).catch((err)=>{
       return res.send(err);
     })
+
 }
 
 
