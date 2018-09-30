@@ -182,17 +182,13 @@ image.onchange = ()=>{
          $('.image-upload-progress').css('display','none');
          var result = xhr.responseText;
          appendItemImage(result);
-         // // addImageToProduct(product_id,result.key);
-         // var image = $('<div class="image-preview"> <div class="image-preview__img"><img src="'+result.location+'" alt="" class="control"></div><div class="image-preview__action"><input class="image_key" type="hidden" value="'+result.key+'"><input class="image_id" type="hidden" value="'+result.image_id+'"><button  type="button" class="image-preview__btn">Delete photo</button></div></div>');
-         // $('.uploaded-photos').append(image);
-
        }
      }
      xhr.send(formdata);
  }
 
  const updateVariantImages = (formdata,file)=>{
-   const url = `'/items/${item_id}/variants/${variant_id}/images`;
+   const url = `/items/${item_id}/variants/${variant_id}/images`;
      var xhr = new XMLHttpRequest();
      xhr.open('put',url);
      xhr.onreadystatechange = function(){
@@ -201,9 +197,6 @@ image.onchange = ()=>{
          $('.image-upload-progress').css('display','none');
          var result = xhr.responseText;
          appendItemImage(result);
-         // // addImageToProduct(product_id,result.key);
-         // var image = $('<div class="image-preview"> <div class="image-preview__img"><img src="'+result.location+'" alt="" class="control"></div><div class="image-preview__action"><input class="image_key" type="hidden" value="'+result.key+'"><input class="image_id" type="hidden" value="'+result.image_id+'"><button  type="button" class="image-preview__btn">Delete photo</button></div></div>');
-         // $('.uploaded-photos').append(image);
 
        }
      }
@@ -233,6 +226,8 @@ $('.image-upload').on('click','.uploaded-image__cancel ',(e)=>{
   let domImage = $(e.target).parents('.uploaded-image');
   if($(e.target).parents().is('.item-uploaded-images')){
     deleteItemImage(image_id,domImage);
+  }else{
+    deleteVariantImage(image_id,domImage);
   }
 })
 const deleteItemImage = (image_id,domImage)=>{
@@ -255,6 +250,13 @@ $('#variant_name').change(()=>{
   updateVariantName();
 })
 
+
+//update variant color type
+$('#variant_color_type').change(()=>{
+  updateVariantColortype();
+})
+
+
 //update variant color
 $('#variant_color').change(()=>{
   updateVariantColor();
@@ -274,6 +276,7 @@ const updateVariantName = ()=>{
   })
 }
 
+
 const updateVariantColor = ()=>{
   showSaving();
   let color = $('#variant_color').val();
@@ -285,5 +288,32 @@ const updateVariantColor = ()=>{
     data:data
   }).done(()=>{
     showSaved();
+  })
+}
+
+const updateVariantColortype = ()=>{
+  showSaving();
+  let color_type = $('#variant_color_type').find(':selected').text();
+  let url        = `/items/${item_id}/variants/${variant_id}/color_type`;
+  data          = {color_type:color_type};
+  $.ajax({
+    type : 'put',
+    url  : url,
+    data  : data
+  })
+  .done(()=>{
+    showSaved();
+  })
+}
+
+const deleteVariantImage = (image_id,domImage)=>{
+  let url = `/items/${item_id}/variants/${variant_id}/images`;
+  let data = {image:image_id};
+  $.ajax({
+    type:'delete',
+    url:url,
+    data:data
+  }).done(()=>{
+     domImage.remove();
   })
 }

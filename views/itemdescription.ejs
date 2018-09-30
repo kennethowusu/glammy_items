@@ -58,7 +58,7 @@
             </div>
           </form>
           <p class="underline text-center bold">Images</p>
-          <div class="item-uploaded-images">
+          <div class="">
           <div class="image-upload">
             <%if(images){%>
               <%images.forEach((image)=>{%>
@@ -79,28 +79,7 @@
           <div class="">
             <input type="hidden" name='' id='item_id' value=<%=item_id%>>
           </div>
-          <script type="text/javascript"`>
 
-
-
-          //   //FOR IMAGES
-          //   image.onchange = function(){
-          //   var formdata = new FormData();
-          //   var files = image.files;
-          //   var file = files[0];
-          //   formdata.append('image',file);
-          //   //
-          //   // if(this.dataset.type == 'parent'){
-          //   // uploadImage(formdata,file.name);
-          //   //  }else{
-          //   //  uploadVariantImage(formdata,file.name);
-          //   //  }
-          //   console.log(formdata);
-          //   }
-          // $('body').on('click',function(){
-          //   console.log(about.getData())
-          // })
-          </script>
           <script type="text/javascript" src="/javascripts/main.js"></script>
     </body>
   </html>

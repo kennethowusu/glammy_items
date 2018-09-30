@@ -63,7 +63,7 @@ module.exports.getNewVariant = (req,res,next)=>{
           ]
   })
   .then((variant)=>{
-    return res.render('itemvariant',{title:"Item Variant",variant:variant,item_id:item_id});
+    return res.render('itemvariant',{title:"Item Variant",variant:variant,images:variant.images,item_id:item_id});
   })
 
 }
@@ -256,7 +256,7 @@ module.exports.updateVariantImages = (req,res,next)=>{
         })
     })
     .then(function(){
-        return res.send(`Varinat Image has been uploaded successfully and the file name is ${req.file.key}`);
+        return res.send(req.file.key);
     }).catch(function(err){
       return res.send(err);
     })
@@ -296,7 +296,7 @@ module.exports.deleteItemImage = (req,res,next)=>{
 
 //delete item image
 module.exports.deleteVariantImage = (req,res,next)=>{
-  const image = req.query.image;
+  const image = req.body.image;
   const variant_id = req.params.variant_id;
 
 
@@ -704,7 +704,7 @@ module.exports.updateVariantColor = (req,res,next)=>{
 //update variant color type
 module.exports.updateVariantColortype = (req,res,next)=>{
   const variant_id = req.params.variant_id;
-  const color_type = req.query.color_type;
+  const color_type = req.body.color_type;
 
   Variant.update({
     color_type : color_type,
