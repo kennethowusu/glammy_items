@@ -1,4 +1,6 @@
 
+
+
 body{
   font-family:$font-family--primary;
   overflow-x:hidden;
@@ -8,8 +10,11 @@ li{
   list-style-type:none;
 }
 
-*:focus{
-  outline:0;
+P{
+  margin: 0;
+}
+a,button,input,a:focus,button:focus,input:focus,select,select:focus{
+  outline:none;
 }
 
 a:hover{

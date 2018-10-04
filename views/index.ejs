@@ -1,24 +1,89 @@
 
 <%- include('header')-%>
+<script type="text/javascript" src="/javascripts/home.js"></script>
 </head>
   <body>
 
     <div class="search mt-15 control">
-      <form action="search__form" class=" search__form control">
-        <input type="text" class="search__input  pointer" placeholder="Search Items">
+      <form action="" class="flex justify-content-center align-items-center">
+        <input type="text" class="search__input" placeholder="Type to search items..." autofocus>
       </form>
     </div>
-   <a href="/items/new"class="input form-input form-btn--rounded form-input--rounded--cinnabar mt-20 in-blk">Add New Item</a>
+
+   <div class="flex justify-content-between align-items-center p-20">
+     <a href="/items/new" class="button">Add New Item</a>
 
 
-   <div class="flex align-items-baseline">
-     <button  class="sortfilter mr-auto">Sort & Filter</button>
-     <p class="item">Items: <span>0</span></p>
+
+       <p class=""><span class="items-count">Items: </span><span class="bold items-count-num">0</span></p>
    </div>
 
-   <p class="underline items-head">ITEMS</p>
 
-    <div class="items">
+     <div class="delete-note-overlay">
+
+       <div class="delete-note">
+         <div class="delete-notice text-center">
+           <span>Are you sure you want to delete:</span>
+           <span class="item-delete-name blk bold">Maybelle for men deodorant lorem lorem lorem</span>
+         </div>
+         <button type="button" name="" class="button pointer">Delete</button>
+         <button type="button" name="" class="button pointer bg-green">Cancel</button>
+       </div>
+     </div>
+
+
+
+        <%# =============================NEW ITEM FORM =================================%>
+     <div class="new-item-overlay">
+       <div class="new-item-cont in-blk">
+          <p class=""></p>
+         <form class="" action="/items" method="post">
+           <div class="field">
+             <label for="" class=" ">Name</label>
+             <input type="text" name="name"  attr-name="name"  class="email">
+           </div>
+           <div class="field">
+             <label for="" class=" ">Price</label>
+             <input type="text" name="price"  attr-name="name"  class=" email">
+           </div>
+           <div class="field">
+             <label for="" class=" ">Original Price</label>
+             <input type="text" name="original_price"  attr-name="name"  class=" email">
+           </div>
+           <div class="field">
+
+             <select  name="main_category"  attr-name="name"  class=" email">
+               <option value="">Select Item Main Category</option>
+               <option value="option_two">Option two</option>
+             </select>
+           </div>
+           <div class="field">
+
+             <select  name="sub_category"  attr-name="name"  class="field">
+               <option value="">Select Item SubCategory</option>
+               <option value="sub_option_two">Option two</option>
+             </select>
+           </div>
+           <div class="">
+
+             <select  name="category"  attr-name="name"  class="field">
+               <option value="">Select Item Category</option>
+               <option value="category_option_two">Option two</option>
+             </select>
+           </div>
+
+
+           <div class="mt-30">
+             <button type="submit"  class="button button-submit bg-green uppercase">Add New Item</button>
+           </div>
+           <div class="mt-30">
+             <button type="submit"  class="button button-submit uppercase ">Cancel</button>
+           </div>
+         </form>
+       </div>
+       </div>
+
+    <div class="items ">
 
 
 
@@ -33,12 +98,14 @@
              <p class="item-grid-desc__name bold">
                Sed ut perspiciatis unde omnis iste natus
              </p>
-             <p class="item-grid-desc__price">
-               Price: <span class="bold">50.00</span>
-             </p>
-             <p class="item-grid-desc__variantnum">
-               No of Variants: <span class="bold">0</span>
-             </p>
+             <div class="flex justify-content-between price-variant-cont mb-15 mt-15">
+               <p class="item-grid-desc__price">
+                 Price: <span class="bold">50.00</span>
+               </p>
+               <p class="item-grid-desc__variantnum">
+                 Variants: <span class="bold">0</span>
+               </p>
+               </div>
            </div>
 
            <div>
@@ -65,8 +132,7 @@
              </ul>
            </div>
         </div>
-
-      <%});%>
+      <%}); %>
 
 
 

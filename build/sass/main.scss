@@ -21,12 +21,13 @@
 //
 //import component styles
   @import 'components/buttons',
-          'components/header',
-          'components/banner-carousel',
           'components/navbar',
           'components/categories',
           'components/item-grid',
-          'components/form-input';
+          'components/form-input',
+          'components/items',
+          'components/delete_note',
+          'components/new_item';
 
   //import pages styles
   @import 'pages/home',

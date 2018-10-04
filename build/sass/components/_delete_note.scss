@@ -1,0 +1,41 @@
+.delete-note-overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width : 100%;
+  height : 100%;
+  background-color: rgba(236, 236, 236, 0.8);
+  padding-top:30px;
+  display:none;//remove this later
+}
+
+.delete-note{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color : #fff;
+  margin : auto;
+  width:100%;
+  height:200px;
+
+  @media(min-width: 465px){
+    width: 350px;
+    height:300px;
+    justify-content:space-around;
+  }
+
+  @media(min-width : 585px){
+    width: 505px;
+  }
+}
+
+.delete-notice{
+  padding-left:30px;
+  padding-right:30px;
+  flex: 1 100%;
+}
+
+.delete-item-name{
+  font-size:17px;
+}

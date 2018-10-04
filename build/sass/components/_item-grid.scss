@@ -1,5 +1,10 @@
+
+
 .item-grid__img-cont{
-  max-width:288px;
+  max-width:200px;
+  & img{
+    max-width:100%;
+  }
 }
 
 .uploaded-image{

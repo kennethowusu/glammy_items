@@ -184,6 +184,9 @@
   padding-bottom:30px;
 }
 //display
+.blk{
+  display:block;
+}
 .in-blk{
   display:inline-block;
 }
@@ -201,9 +204,20 @@
   text-align:left;
 }
 
+
+//text-transform
+.capitalize{
+  text-transform : capitalize;
+}
+.uppercase{
+  text-transform : uppercase;
+}
 //background color
 .bg-white{
   background-color:white;
+}
+.bg-danger{
+  background-color : red !important;
 }
 //miscellaneous
 .control{
