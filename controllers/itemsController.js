@@ -22,10 +22,10 @@ require('dotenv').config();
 
 //GET ALL ITEMS
 module.exports.getAllItems = (req,res,next)=>{
-  Item.findAll()
+  Item.findAndCountAll()
   .then((items)=>{
      console.log(items);
-     return res.render('index',{title: "Upload Items",items:items});
+     return res.render('index',{title: "Upload Items",items:items.rows,items_count:items.count});
   });
 }
 
@@ -81,6 +81,7 @@ module.exports.addNewItem = function(req, res, next) {
     price: req.body.price,
   }
 
+
   Item.sync({
       force: false
     })
@@ -108,7 +109,10 @@ module.exports.addNewItem = function(req, res, next) {
 
         })
         .then((description) => {
-          return res.redirect(`items/${newItem.id}/descriptions`);
+          return res.send({
+            created: "yes",
+            descriptionUrl:`/items/${newItem.id}/descriptions`
+          });
         })//descripton then
         .catch((err)=>{
           res.send(err);
@@ -117,6 +121,7 @@ module.exports.addNewItem = function(req, res, next) {
     .catch(err => {
       return res.redirect(err);
     })
+
 }
 
 //update Item about

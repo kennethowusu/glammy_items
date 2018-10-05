@@ -14,8 +14,8 @@ const s3func = require('../functions/s3func');
 //get all routes
 router.get('/',itemController.getAllItems);
 
-//get item new form
-router.get('/items/new',itemController.getNewItemForm);
+// //get item new form
+// router.get('/items/new',itemController.getNewItemForm);
 
 
 //get new item description
