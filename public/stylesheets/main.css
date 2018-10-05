@@ -219,6 +219,9 @@
 .w-100 {
   width: 100%; }
 
+.f-22 {
+  font-size: 22px; }
+
 body {
   font-family: "Pt sans", Helvetica, Arial, Sans-serif;
   overflow-x: hidden; }
@@ -377,6 +380,9 @@ ul {
 .bg-green {
   background-color: #2d4c2f !important; }
 
+.bg-pink {
+  background-color: #ef426c !important; }
+
 .search__input {
   width: 80%;
   font-size: 1.6rem;
@@ -388,6 +394,14 @@ ul {
   margin: auto; }
   .search__input::placeholder {
     color: #a7a7a7; }
+
+.form-fields {
+  padding: 20px; }
+
+@media (min-width: 680px) {
+  .form-fields-cont {
+    width: 660px;
+    margin: auto; } }
 
 .fields {
   padding: 15px; }
@@ -404,7 +418,7 @@ input, select {
   width: 100%;
   font-size: 1.2rem;
   padding: 15px;
-  color: #a7a7a7;
+  color: #475655;
   border: none;
   box-shadow: 0 0 3px #aba5a5;
   margin: auto; }
@@ -688,6 +702,18 @@ a, a:hover {
     transform: scale(40, 40); } }
 .ripple:focus:not(:active)::after {
   animation: ripple 1s ease-in-out both; }
+
+.item-detail-actions {
+  flex-wrap: wrap; }
+  .item-detail-actions a {
+    flex: 1 100%;
+    margin-bottom: 15px; }
+    @media (min-width: 680px) {
+      .item-detail-actions a {
+        flex: 1 auto;
+        margin-right: 20px; }
+        .item-detail-actions a:last-of-type {
+          margin-right: 0; } }
 
 .footer {
   background-color: #eee;
