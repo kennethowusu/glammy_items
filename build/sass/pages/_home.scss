@@ -19,5 +19,25 @@ a,a:hover{
 }
 
 
+.delete-note-loader{
 
+  & .item-loader{
+    border-color: #E84234 transparent transparent transparent !important;
+  }
+}
+.new-variant-loader-cont{
+  & .item-loader{
+    border-color : #2d4c2f transparent transparent transparent !important;
+  }
+
+}
+
+.delete-note-loader,.new-variant-loader-cont{
+  & .new-item-loader{
+    @media(min-width: 667px){
+      margin-top : 47px;
+    }
+  }
+
+}
 //============FOR NEW ITEM ====================//

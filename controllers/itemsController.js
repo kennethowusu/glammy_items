@@ -52,8 +52,8 @@ module.exports.getNewItemDescription = (req,res,next)=>{
 }
 
 
-//GET NEW VARIANT
-module.exports.getNewVariant = (req,res,next)=>{
+// //GET NEW VARIANT
+module.exports.getVariantDescription = (req,res,next)=>{
   const item_id = req.params.item_id;
   const variant_id  = req.params.variant_id;
   Variant.findOne({
@@ -63,10 +63,31 @@ module.exports.getNewVariant = (req,res,next)=>{
           ]
   })
   .then((variant)=>{
-    return res.render('itemvariant',{title:"Item Variant",variant:variant,images:variant.images,item_id:item_id});
+    return res.render('variantdescription',{title:"Item Variant",variant:variant,images:variant.images,item_id:item_id});
   })
 
 }
+
+//GET ITEM VARIANTS
+ module.exports.getItemVariants = (req,res,next)=>{
+   const item_id = req.params.item_id;
+   Item.find({
+     where:{id:item_id},
+     include:[
+       {model:Variant,where:{item_id:item_id},required:false,
+       include:[
+         {model:Variant_Image}
+       ]
+     },
+       {model:Description,where:{item_id:item_id}}
+
+     ]
+   }).then((item)=>{
+
+     return res.render('variants',{title:`Variants|${item.name}`,item:item,item_id:item_id,variants:item.variants,variants_count:item.variants.length});
+
+   })
+ }
 //add new item
 module.exports.addNewItem = function(req, res, next) {
 

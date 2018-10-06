@@ -39,14 +39,17 @@ router.put('/items/:item_id/descriptions/images',itemController.updateItemImages
 
 
 //create new item variant
-router.get('/items/:item_id/variants/new',itemController.createNewVariant);
+router.post('/items/:item_id/variants',itemController.createNewVariant);
+
+//get item variants
+router.get('/items/:item_id/variants',itemController.getItemVariants);
 
 //get item detail page
 
 router.get('/items/:item_id/edit/details',itemController.getEditItemDetail);
 
  //get new variant
- router.get('/items/:item_id/variants/:variant_id',itemController.getNewVariant);
+ router.get('/items/:item_id/variants/:variant_id',itemController.getVariantDescription);
 //create variant image
 router.put('/items/:item_id/variants/:variant_id/images',itemController.updateVariantImages);
 
