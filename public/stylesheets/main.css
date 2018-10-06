@@ -550,7 +550,7 @@ option {
     margin-bottom: 0; }
 
 .delete-note-overlay, .new-variant-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -667,8 +667,10 @@ a, a:hover {
 .delete-note-loader .item-loader {
   border-color: #E84234 transparent transparent transparent !important; }
 
-.new-variant-loader-cont .item-loader {
-  border-color: #2d4c2f transparent transparent transparent !important; }
+.new-variant-loader-cont {
+  display: none; }
+  .new-variant-loader-cont .item-loader {
+    border-color: #2d4c2f transparent transparent transparent !important; }
 
 @media (min-width: 667px) {
   .delete-note-loader .new-item-loader, .new-variant-loader-cont .new-item-loader {

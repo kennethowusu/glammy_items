@@ -26,6 +26,7 @@ a,a:hover{
   }
 }
 .new-variant-loader-cont{
+    display:none;
   & .item-loader{
     border-color : #2d4c2f transparent transparent transparent !important;
   }

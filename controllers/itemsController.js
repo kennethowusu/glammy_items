@@ -256,7 +256,10 @@ module.exports.createNewVariant = (req,res,next)=>{
        variant_num : variant_num
     })
     .then(()=>{
-      return res.redirect(`/items/${item_id}/variants/${variant_id}`);
+      return res.send({
+        created: "yes",
+        redirectUrl : `/items/${item_id}/variants/${variant_id}`
+      });
     })
     .catch((err)=>{
       return res.send(err);

@@ -59,10 +59,11 @@
              </ul>
 
              <ul class="action mb-20">
+
                <li class="action_item rel ">Variant
                   <ul class="action_dropdown abs">
-                    <li class="view action_dropdown-list"><a href="<%=`/items/${item.id}/variants`%>">View</a></li>
-                    <li class="view action_dropdown-list"><a href="<%=`/items/${item.id}/variants/new`%>">New</a></li>
+                    <li class="view action_dropdown-list"><a href=<%=`/items/${item.id}/variants`%>>View</a></li>
+                    <li class="view action_dropdown-list"><a class="js-new-variant-btn" item_id="<%=item.id%>" item_name=" <%=item.name%>" type="link" href="#">New</a></li>
                     <li class="edit action_dropdown-list"><a href="">Edit</a></li>
                     <li class="trash action_dropdown-list "><a href="#">Delete</a></li>
                   </ul>
