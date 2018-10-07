@@ -19,8 +19,8 @@ a,a:hover{
 }
 
 
-.delete-note-loader{
-
+.delete-note-loader-cont{
+     display:none;
   & .item-loader{
     border-color: #E84234 transparent transparent transparent !important;
   }
@@ -33,7 +33,7 @@ a,a:hover{
 
 }
 
-.delete-note-loader,.new-variant-loader-cont{
+.delete-note-loader-cont,.new-variant-loader-cont{
   & .new-item-loader{
     @media(min-width: 667px){
       margin-top : 47px;

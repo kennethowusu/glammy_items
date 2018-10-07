@@ -33,6 +33,10 @@ var removeHtml = (selector,dom)=>{
 var showNewVariantLoader = ()=>{
     $('.new-variant-loader-cont').css('display','inline-block');
 }
+
+var showItemDeleteLoader = ()=>{
+  $('.delete-note-loader-cont').css('display','inline-block');
+}
 //==============CREATE NEW ITEM================================//
 
   getHtml('.js-add-new-item','/includes/send-new-item-form');
@@ -59,7 +63,37 @@ $('html').on('click','.js-new-item-button-create',(e)=>{
   })
 })
 
+//==================DELETE ITEM==============================//
+var insertItemIdinDeleteNotice = (e)=>{
+  let itemId = $(e.target).attr('item_id');
+  let itemName = $(e.target).attr('item_name');
+  $('input[name=item_id]').val(itemId);
+  $('.item-delete-name').html(itemName);
 
+}
+//get delete item notice
+getHtml('.js-delete-item-link','/includes/send-delete-item-notice',insertItemIdinDeleteNotice);
+
+//remove delete item notice from dom
+removeHtml('.js-delete-item-cancel-btn','.delete-note-overlay');
+
+//handle item delete process
+$('html').on('click','.js-delete-item-btn',(e)=>{
+  showNewVariantLoader();
+  let btn = $(e.target);
+  let itemId = btn.prev().val();
+  let url = `/items/${itemId}`;
+  $.ajax({
+    type : 'delete',
+    url  : url
+  }).done((result)=>{
+    if(result.isDeleted == 1){
+      btn.parents('.delete-note-overlay').remove();
+      $('.item-grid.'+itemId).remove();
+      $('.items-count-num').html($('.items-count-num').html() - 1);
+    }
+  })
+})
 //=================CREATE NEW VARIANT=========================//
 
 var insertVariantItemId = (e)=>{

@@ -22,7 +22,12 @@ require('dotenv').config();
 
 //GET ALL ITEMS
 module.exports.getAllItems = (req,res,next)=>{
-  Item.findAndCountAll()
+  Item.findAndCountAll({
+    include:[
+      {model:Image,required:false},
+      {model:Variant,required:false}
+    ]
+  })
   .then((items)=>{
      console.log(items);
      return res.render('index',{title: "Upload Items",items:items.rows,items_count:items.count});
@@ -351,179 +356,167 @@ module.exports.deleteVariantImage = (req,res,next)=>{
 module.exports.deleteItem = (req,res,next)=>{
     const item_id = req.params.item_id;
 
-
-
-    //delete item
+    //=====================delete item in db==============//
     Item.destroy({where:{id:item_id}})
     .then(function(){
 
-    //delete item description
+     //=============delete variants from db=========//
+     Variant.destroy({where:{item_id:item_id}})
 
-    Description.destroy({where:{item_id:item_id}})
-    .then(function(){
 
-    //get item images
+    //===========delete item description in db==============//
+    Description.destroy({where:{item_id:item_id}});
+
+
+    //=============get item images file names in array=======//
     Image.findAll({where:{item_id:item_id}})
-    .then((itemImages)=>{
-      const images = [];
-     itemImages.forEach((itemimages)=>{
-       images.push(itemimages.image);
-     });//foreach itemimages
-      //convert images to a form required by amazon s3
-     const imagesArray = [];
-      images.forEach(function(image){
-        imagesArray.push({"Key":image});
-      })
+      .then((itemImages)=>{
 
-      //delete all item images after finding them
-      var params = {
-       Bucket: process.env.S3_BUCKET,
-       Delete: {
-        Objects: imagesArray
-
-       }
-      };
-      s3func.s3.deleteObjects(params, function(err, data){
-        if(err){return res.send(err)
-        }else{
+       //========convert item images to array if length of items > 0=====//
+       const images = [];
+       if(itemImages.length > 0){
+         itemImages.forEach((itemimages)=>{
+           images.push(itemimages.image);
+         });
 
 
+         //===========convert images array to a format for s3 ===============//
+         const imagesArray = [];
+          images.forEach(function(image){
+            imagesArray.push({"Key":image});
+          });
+
+          //==========params for s3==================//
+         var params = {
+                         Bucket: process.env.S3_BUCKET,
+                         Delete: {
+                           Objects: imagesArray
+                         }
+                      };
+
+         //============delete images from amazon s3===========//
+         s3func.s3.deleteObjects(params, function(err, data){
+            if(err){return res.send("here is the error")}
+            else{
+              //=========delete item images in db============//
+              Image.destroy({where:{item_id:item_id}});
+            }
+
+           })//s3func.s3
 
 
-
-                      //delete item images
-                      Image.destroy({where:{item_id:item_id}}).
-                      then(function(){
+      }//if statement of item images
 
 
-                        //delete variant images
-                        const variantImages = [];
-                        const variantImageArray = [];
-                        Variant_Image.findAll({where:{item_id:item_id}})
-                        .then(function(variantimages){
+    }).then(()=>{
 
-                           variantimages.forEach(function(variant){
-                             variantImages.push(variant.image);
-                           })
+              //===========for variant images============//
+              const variantImages = [];
+              const variantImageArray = [];
+              Variant_Image.findAll({where:{item_id:item_id}})
+              .then(function(variantimages){
+                 //=============check if variant images > 0 then proceed==========//
+                 if(variantimages.length > 0){
+                  //=========convert variant images to array==============//
+                   variantimages.forEach(function(variant){
+                     variantImages.push(variant.image);
+                   });
 
-                           variantImages.forEach(function(variant_image){
-                             variantImageArray.push({"Key":variant_image});
-                           })
-                           //delete all item images after finding them
-                           var variant_params = {
-                            Bucket: process.env.S3_BUCKET,
-                            Delete: {
-                             Objects: variantImageArray
-
-                            }
-                           };
-                           s3func.s3.deleteObjects(variant_params, function(err, data){
-                             if(err){return res.send(err);}
-
-                          //delete variant images from database
-                          Variant_Image.destroy({where:{item_id:item_id}})
-                          .then(function(){
-
-                            //delete variants from database;
-                            Variant.destroy({where:{item_id:item_id}})
-                            .then(function(){
-
-                              return res.send("All done you can continue");
-
-                            })
+                   //===========convert variant images to s3 format=======//
+                   variantImages.forEach(function(variant_image){
+                     variantImageArray.push({"Key":variant_image});
+                   });
 
 
+                   //========s3 params==============//
+                   var variant_params = {
+                        Bucket: process.env.S3_BUCKET,
+                        Delete: {
+                        Objects: variantImageArray
 
-                          })
+                                }
+                          };
+
+                    //===========delete images from s3 ======================//
+                    s3func.s3.deleteObjects(variant_params, function(err, data){
+                      if(err){return res.send(err);}
+
+                    //===============delete variant images from db=======//
+                        Variant_Image.destroy({where:{item_id:item_id}})
+                        .then(function(){
+                            return res.send({isDeleted : 1});
+                        });
+
+                      })//s3func
 
 
+                 }
+            }).then(()=>{
 
-                    })
-
-                      })
-                      .catch(function(err){
-
-                      })//catch delete Image
-                    })
+              return res.send({isDeleted:1});
+            })//Variant_Image.findAll
 
 
+      })//Image.findAll
+
+    })//Item.destroy
+
+  }
 
 
+  //delete variant
+  module.exports.deleteVariant  = (req,res,next)=>{
+    const variant_id = req.params.variant_id;
 
 
+    Variant_Image.findAll({where:{variant_id:variant_id}})
+    .then(function(variantimages){
+        const variantImages = [];
+        const imagesArray = [];
+        variantimages.forEach(function(vimages){
+          variantImages.push(vimages.image);
 
+        })//forEach
 
+        variantImages.forEach(function(vImages){
+          imagesArray.push({"Key":vImages});
+        })
 
-
-
-    }//s3func else
-
-      })//s3func.s3
+        return imagesArray;
     })
-    .catch(()=>{
-      return res.send(err);
+    .then(function(returnedvariantimages){
+      //images founded and s3 format created
+      //delete variant images
+        Variant_Image.destroy({where:{variant_id:variant_id}})
+        .then(function(){
+            //delete variant
+            Variant.destroy({where:{variant_id:variant_id}})
+            .then(function(){
+
+              //delete from se
+              const params = {
+               Bucket: process.env.S3_BUCKET,
+               Delete: {
+                Objects: returnedvariantimages
+               }};
+
+
+               s3func.s3.deleteObjects(params, function(err, data){
+                 if(err){return res.send(err)
+                 }else{
+                   return res.send("All done");
+               }
+             })//s3func
+            })//variant destroy
+
+
+
+        })//variant image
+      //delete images
+      //delete from s3
+
+
     })
-
-
-    })//description
-    })
-
-}
-
-
-//delete variant
-module.exports.deleteVariant  = (req,res,next)=>{
-  const variant_id = req.params.variant_id;
-
-
-  Variant_Image.findAll({where:{variant_id:variant_id}})
-  .then(function(variantimages){
-      const variantImages = [];
-      const imagesArray = [];
-      variantimages.forEach(function(vimages){
-        variantImages.push(vimages.image);
-
-      })//forEach
-
-      variantImages.forEach(function(vImages){
-        imagesArray.push({"Key":vImages});
-      })
-
-      return imagesArray;
-  })
-  .then(function(returnedvariantimages){
-    //images founded and s3 format created
-    //delete variant images
-      Variant_Image.destroy({where:{variant_id:variant_id}})
-      .then(function(){
-          //delete variant
-          Variant.destroy({where:{variant_id:variant_id}})
-          .then(function(){
-
-            //delete from se
-            const params = {
-             Bucket: process.env.S3_BUCKET,
-             Delete: {
-              Objects: returnedvariantimages
-             }};
-
-
-             s3func.s3.deleteObjects(params, function(err, data){
-               if(err){return res.send(err)
-               }else{
-                 return res.send("All done");
-             }
-           })//s3func
-          })//variant destroy
-
-
-
-      })//variant image
-    //delete images
-    //delete from s3
-
-
-  })
 
 }
 

@@ -26,7 +26,7 @@
 
 
       <% items.forEach((item)=>{%>
-        <div class="item-grid">
+        <div class="item-grid <%=item.id%>">
            <div class="">
              <div class="item-grid__img-cont">
                <img src="/images/rasta/item1.jpg" alt="" class="item-grid__img w-100">
@@ -41,7 +41,7 @@
                  Price: <span class="bold"><%=item.price%></span>
                </p>
                <p class="item-grid-desc__variantnum">
-                 Variants: <span class="bold">0</span>
+                 Variants: <span class="bold"><%=item.variants.length%></span>
                </p>
                </div>
            </div>
@@ -53,7 +53,7 @@
                     <li class="view action_dropdown-list"><a href="#">View</a></li>
                     <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/descriptions`%>>Edit Description</a></li>
                     <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/edit/details`%>>Edit Detail</a></li>
-                    <li class="trash action_dropdown-list"><a href="#">Delete</a></li>
+                    <li class="trash action_dropdown-list"><a href="#" class="js-delete-item-link" type="link" item_id="<%=item.id%>" item_name=" <%=item.name%>">Delete</a></li>
                   </ul>
                </li>
              </ul>

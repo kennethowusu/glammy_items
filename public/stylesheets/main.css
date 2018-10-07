@@ -664,8 +664,10 @@ a, a:hover {
 .items-count-num {
   color: #E84234; }
 
-.delete-note-loader .item-loader {
-  border-color: #E84234 transparent transparent transparent !important; }
+.delete-note-loader-cont {
+  display: none; }
+  .delete-note-loader-cont .item-loader {
+    border-color: #E84234 transparent transparent transparent !important; }
 
 .new-variant-loader-cont {
   display: none; }
@@ -673,7 +675,7 @@ a, a:hover {
     border-color: #2d4c2f transparent transparent transparent !important; }
 
 @media (min-width: 667px) {
-  .delete-note-loader .new-item-loader, .new-variant-loader-cont .new-item-loader {
+  .delete-note-loader-cont .new-item-loader, .new-variant-loader-cont .new-item-loader {
     margin-top: 47px; } }
 
 .toggle-password {
