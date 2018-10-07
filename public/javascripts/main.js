@@ -173,11 +173,12 @@ image.onchange = ()=>{
 
 
  const updateItemImages = (formdata,file)=>{
+   $('.image-upload-progress').css('display','block');
    const url = `/items/${item_id}/descriptions/images`;
      var xhr = new XMLHttpRequest();
      xhr.open('put',url);
      xhr.onreadystatechange = function(){
-       $('.image-upload-progress').css('display','flex');
+
        if(xhr.readyState == 4 && xhr.status == 200){
          $('.image-upload-progress').css('display','none');
          var result = xhr.responseText;
@@ -213,7 +214,7 @@ const appendItemImage = (image_key)=>{
           </div>
           <div class="flex align-items-center">
             <img src="/images/svg/cancel.svg" alt="" image_id="${image_key}" class="uploaded-image__cancel pointer">
-            <p class="pointer">Delete</p>
+            <p class="pointer bold">Delete Photo</p>
           </div>
         </div>`;
     $('.image-upload').append(html);

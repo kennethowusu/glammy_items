@@ -323,7 +323,8 @@ module.exports.deleteItemImage = (req,res,next)=>{
     })
   }
 });
-
+console.log(image);
+console.log(item_id)
 
 }
 

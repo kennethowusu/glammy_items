@@ -7,31 +7,31 @@
       <div class="update-notice saved">
         About item field updated successfully!
       </div>
-      <div class="fields">
-           <p class="underline text-center bold">Item Description</p>
-
-              <div class="input-group-field" id="about-field">
+      <div class="">
+           <p class=" text-center mt-30">Item Description for:</p>
+            <p class="text-center"> <b class="f-22">Matte Latte For Boys</b></p>
+             <div class="description-form-cont">
+              <div class="field" id="about-field">
                 <label for="" class="form-label ">About Item</label>
                 <textarea name="name"id="about" rows="8" class="form-input control"><%=description.about%></textarea>
               </div>
 
-            <div class="input-group-field" id='ingredients-field'>
+            <div class="field" id='ingredients-field'>
               <label for="" class="form-label ">Ingredients</label>
               <textarea name="name" id="ingredients" rows="8" class="form-input control"><%=description.ingredients%></textarea>
             </div>
 
-            <div class="input-group-field" id='how_to_use-field'>
+            <div class="field" id='how_to_use-field'>
               <label for="" class="form-label ">Item Description</label>
               <textarea name="name" id="how_to_use" rows="8" class="form-input control"><%=description.how_to_use%></textarea>
             </div>
 
-            <div class="input-group-field mt-20">
-              <label for="image" class="form-label pointer  file-type rel">
-                <p class="text-center">Upload Item Image</p>
-                <div class=" flex justify-content-center">
+            <div class="field ">
+              <label for="image" class="file-upload-label pointer rel">
 
-                  <div class="abs image-upload-progress" >
-                    <p class="text-center">Uploading. Please Wait...</p>
+                <div class=" flex justify-content-center h-100 align-items-center">
+                  <div class="abs image-upload-progress none" >
+                    <p class="text-center image-upload-notice mt-25">Uploading. Please Wait...</p>
                     <div class=" flex justify-content-center ">
 
                       <img src="/images/svg/uploading.svg" width="30px" height="45px" alt="">
@@ -40,7 +40,7 @@
 
 
 
-                  <img src="/images/svg/upload.svg" width="30px" height="45px" alt="">
+                  <img src="/images/svg/upload.svg" width="100px" height="100px" alt="">
                 </div>
               </label>
               <input type="file" name="image" id="image" class="none" value=""  data-type="parent">
@@ -48,18 +48,18 @@
 
 
 
-            <div class="mt-30">
-              <button type="submit"  class="form-input control  rel straight-edge">Add New Item</button>
+            <%# <div class="mt-30">
+              <button type="submit"  class="button control ">Add New Item</button>
             </div>
 
             <div class="mt-20">
 
-              <button type="submit"  class="form-input control form-btn--rounded form-input--rounded--cinnabar rel straight-edge">Add New Item</button>
-            </div>
+              <button type="submit"  class="button control ">Add New Item</button>
+            </div> %>
           </form>
           <p class="underline text-center bold">Images</p>
           <div class="">
-          <div class="image-upload">
+          <div class="image-upload item-uploaded-images">
             <%if(images){%>
               <%images.forEach((image)=>{%>
                 <div class="uploaded-image flex">
@@ -67,8 +67,8 @@
                     <img src="<%=`https://s3.eu-west-2.amazonaws.com/glammycare/${image.image}`%>" image_id="<%=image.image%>" alt="" class="w-100 ">
                   </div>
                   <div class="flex align-items-center">
-                    <img src="/images/svg/cancel.svg" alt=""  class="uploaded-image__cancel pointer">
-                    <p class="pointer">Delete</p>
+                    <img src="/images/svg/cancel.svg" image_id="<%=image.image%>" alt=""  class="uploaded-image__cancel pointer">
+                    <p class="pointer bold">Delete Photo</p>
                   </div>
                 </div>
              <%})%>
@@ -79,7 +79,7 @@
           <div class="">
             <input type="hidden" name='' id='item_id' value=<%=item_id%>>
           </div>
-
+        </div>
           <script type="text/javascript" src="/javascripts/main.js"></script>
     </body>
   </html>
