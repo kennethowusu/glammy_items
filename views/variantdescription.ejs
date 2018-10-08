@@ -7,18 +7,20 @@
       <div class="update-notice saved">
         Field Update was successfull!
       </div>
-      <div class="fields">
-           <p class="underline text-center bold">Variant</p>
+      <div class="field">
+        <p class=" text-center mt-30">Variant Description for:</p>
+        <p class="text-center"> <b class="f-22"><%=variant.name%>(<%=variant.color%>)</b></p>
 
-           <div class="input-group-field">
-             <label for="" class="form-label ">Variant Name</label>
+        <div class="description-form-cont">
+           <div class="field">
+             <label for="" class="">Variant Name</label>
              <input type="text" name="name"  attr-name="name" id="variant_name" value="<%=variant.name%>" class="form-input control email">
            </div>
-           <div class="input-group-field">
-             <label for="" class="form-label ">Color</label>
+           <div class="field">
+             <label for="" class="">Color</label>
              <input type="text" name="name"  attr-name="name" id="variant_color" value="<%=variant.color%>"  class="form-input control email">
            </div>
-           <div class="input-group-field">
+           <div class="field">
 
              <select  name="name"  attr-name="name"  id="variant_color_type"class="form-input control email">
                <option value="">Select variant color type</option>
@@ -26,13 +28,12 @@
              </select>
            </div>
 
-            <div class="input-group-field mt-20">
-              <label for="image" class="form-label pointer  file-type rel">
-                <p class="text-center">Upload Variant Image</p>
-                <div class=" flex justify-content-center">
+            <div class="field">
+              <label for="image" class="file-upload-label pointer rel">
+                <div class=" flex justify-content-center h-100 align-items-center">
 
-                  <div class="abs image-upload-progress">
-                    <p class="text-center">Uploading. Please Wait...</p>
+                  <div class="abs image-upload-progress none">
+                    <p class="text-center image-upload-notice mt-25">Uploading. Please Wait...</p>
                     <div class=" flex justify-content-center ">
 
                       <img src="/images/svg/uploading.svg" width="30px" height="45px" alt="">
@@ -41,7 +42,7 @@
 
 
 
-                  <img src="/images/svg/upload.svg" width="30px" height="45px" alt="">
+                  <img src="/images/svg/upload.svg" width="100px" height="100px" alt="">
                 </div>
               </label>
               <input type="file" name="image" id="image" class="none" value="">
@@ -49,17 +50,17 @@
 
 
 
-            <div class="mt-30">
+            <%# <div class="mt-30">
               <button type="submit"  class="form-input control  rel straight-edge">Add New Variant</button>
             </div>
 
             <div class="mt-20">
 
               <button type="submit"  class="form-input control form-btn--rounded form-input--rounded--cinnabar rel straight-edge">Add New Variant</button>
-            </div>
+            </div> %>
           </form>
 
-        
+
           <div class="image-upload">
             <%if(images){%>
               <%images.forEach((image)=>{%>
@@ -81,6 +82,7 @@
             <input type="hidden" name="" id="item_id" value="<%=item_id%>">
             <input type="hidden" name="" id="variant_id" value="<%=variant.variant_id%>">
           </div>
+        </div>
           <script type="text/javascript" src="/javascripts/main.js"></script>
 
 

@@ -68,7 +68,7 @@ module.exports.getVariantDescription = (req,res,next)=>{
           ]
   })
   .then((variant)=>{
-    return res.render('variantdescription',{title:"Item Variant",variant:variant,images:variant.images,item_id:item_id});
+    return res.render('variantdescription',{title:"Item Variant",variant:variant,images:variant.variant_images,item_id:item_id});
   })
 
 }

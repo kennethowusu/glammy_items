@@ -189,11 +189,11 @@ image.onchange = ()=>{
  }
 
  const updateVariantImages = (formdata,file)=>{
+    $('.image-upload-progress').css('display','block');
    const url = `/items/${item_id}/variants/${variant_id}/images`;
      var xhr = new XMLHttpRequest();
      xhr.open('put',url);
      xhr.onreadystatechange = function(){
-       $('.image-upload-progress').css('display','flex');
        if(xhr.readyState == 4 && xhr.status == 200){
          $('.image-upload-progress').css('display','none');
          var result = xhr.responseText;

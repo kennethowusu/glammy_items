@@ -121,11 +121,11 @@
 
            <div>
              <ul class="action mr-20 mb-20">
-               <li class="action_item rel ">Item
+               <li class="action_item rel ">Variant
                   <ul class="action_dropdown abs">
                     <li class="view action_dropdown-list"><a href="#">View</a></li>
-                    <li class="edit action_dropdown-list"><a href=<%=`items/${variant.variant_id}/descriptions`%>>Edit Description</a></li>
-                    <li class="edit action_dropdown-list"><a href=<%=`items/${item.variant_id}/edit/details`%>>Edit Detail</a></li>
+                    <li class="edit action_dropdown-list"><a href=<%=`/items/${item.id}/variants/${variant.variant_id}`%>>Edit Description</a></li>
+                    <li class="edit action_dropdown-list"><a href=<%=`/items/${item.variant_id}/edit/details`%>>Edit Detail</a></li>
                     <li class="trash action_dropdown-list"><a href="#">Delete</a></li>
                   </ul>
                </li>
