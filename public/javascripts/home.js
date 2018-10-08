@@ -123,3 +123,34 @@ $('html').on('click','.new-variant-create-btn',(e)=>{
     }
   })
 })
+
+//============================DELETE VARIANT NOTICE===========================//
+
+ var insertVariantIdInDeleteNotice = (e)=>{
+   let itemId    = $(e.target).attr('item_id');
+   let variantId = $(e.target).attr('variant_id');
+   let variantName = $(e.target).attr('variant_name');
+   $('input[name=item_id]').val(itemId);
+   $('input[variant_id]').val(variantId);
+   $('.variant-delete-name').html(variantName);
+ }
+
+ $('html').on('click','.js-delete-variant-btn',(e)=>{
+   showNewVariantLoader();
+   let btn = $(e.target);
+   let variantId = btn.prevAll('input[variant_id]').val();
+   let itemId = btn.prev().val();
+   let url = `/items/${itemId}/variants/${variantId}`;
+   $.ajax({
+     type : 'delete',
+     url  : url
+   }).done((result)=>{
+     if(result.isDeleted == 1){
+       btn.parents('.delete-note-overlay').remove();
+       $('.item-grid.'+variantId).remove();
+       $('.items-count-num').html($('.items-count-num').html() - 1);
+     }
+   })
+ })
+ //get variant delete html
+ getHtml('.delete-variant-link','/includes/send-delete-variant-notice',insertVariantIdInDeleteNotice);

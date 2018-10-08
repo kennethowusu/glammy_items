@@ -20,3 +20,8 @@ module.exports.sendNewItemForm = (req,res,next)=>{
   return  res.render('includes/newItemForm');
 
 }
+
+//send variant delete notice
+module.exports.sendVariantDeleteNotice = (req,res,next)=>{
+  return res.render('includes/VariantDeleteNotice');
+}

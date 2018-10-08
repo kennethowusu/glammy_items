@@ -232,7 +232,7 @@ $('.image-upload').on('click','.uploaded-image__cancel ',(e)=>{
   }
 })
 const deleteItemImage = (image_id,domImage)=>{
-  let url = `/items/${item_id}/descriptions/images`;
+  let url  = `/items/${item_id}/descriptions/images`;
   let data = {image:image_id};
   $.ajax({
     type:'delete',

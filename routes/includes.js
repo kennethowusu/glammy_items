@@ -13,3 +13,6 @@ module.exports = router;
 
 //send new item form
 router.get('/send-new-item-form',includesController.isAjaxRequest,includesController.sendNewItemForm);
+
+//send variant delete notice
+router.get('/send-delete-variant-notice',includesController.isAjaxRequest,includesController.sendVariantDeleteNotice);
