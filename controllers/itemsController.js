@@ -29,8 +29,7 @@ module.exports.getAllItems = (req,res,next)=>{
     ]
   })
   .then((items)=>{
-     console.log(items);
-     return res.render('index',{title: "Upload Items",items:items.rows,items_count:items.count});
+     return res.render('index',{title: "Items",items:items.rows,items_count:items.count});
   });
 }
 
@@ -89,7 +88,7 @@ module.exports.getVariantDescription = (req,res,next)=>{
      ]
    }).then((item)=>{
 
-     return res.render('variants',{title:`Variants|${item.name}`,item:item,item_id:item_id,variants:item.variants,variants_count:item.variants.length});
+     return res.render('variants',{title:`Variants | ${item.name}`,item:item,item_id:item_id,variants:item.variants,variants_count:item.variants.length});
 
    })
  }

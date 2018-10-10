@@ -332,9 +332,24 @@ ul {
     color: #EF426C; }
 
 .item-grid__img-cont {
-  max-width: 200px; }
+  margin-bottom: 15px;
+  max-width: 200px;
+  max-height: 220px;
+  width: 200px;
+  height: 220px; }
   .item-grid__img-cont img {
-    max-width: 100%; }
+    max-width: 100%;
+    max-height: 100%; }
+
+.uploaded-image {
+  margin-bottom: 20px; }
+
+.uploaded-image__img__cont {
+  margin-right: 30px;
+  max-width: 150px;
+  max-height: 200px; }
+  .uploaded-image__img__cont img {
+    height: 100%; }
 
 .image-upload-notice {
   font-size: 19px;
@@ -350,10 +365,11 @@ ul {
   padding: 6px;
   color: #fff;
   background-color: #e84234;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 30;
   display: none; }
 
 .button {
@@ -374,6 +390,9 @@ ul {
   .button:hover {
     color: #fff;
     opacity: 0.8; }
+
+.button.control {
+  width: 100%; }
 
 .button-submit {
   width: 100%;
@@ -460,11 +479,6 @@ option {
   z-index: 20;
   background-color: #ececec; }
 
-.uploaded-image__img__cont {
-  margin-right: 30px;
-  max-width: 150px;
-  max-height: 150px; }
-
 .items {
   padding: 20px;
   margin-bottom: 200px;
@@ -482,6 +496,12 @@ option {
 
 .items-head {
   font-size: 1.4em; }
+
+.item-grid-desc__name {
+  max-width: 420px;
+  height: 48px;
+  max-height: 48px;
+  overflow: hidden; }
 
 .bold {
   font-weight: 700; }
@@ -505,6 +525,9 @@ option {
 .price-variant-cont {
   max-width: 418px; }
 
+.price-variant-color-cont {
+  max-width: 202px; }
+
 .action-item {
   background: url("../images/svg/action-hamburger.svg"); }
 
@@ -515,6 +538,10 @@ option {
 .edit {
   background: url(/images/svg/edit.svg) no-repeat 100%;
   background-size: 20px; }
+
+.add-new {
+  background: url(/images/svg/add-new.svg) no-repeat 100%;
+  background-size: 21px; }
 
 .trash {
   background: url(/images/svg/trash.svg) no-repeat 100%;

@@ -2,10 +2,10 @@
 </header>
     <body>
       <div class="update-notice saving">
-        Saving
+        Saving...
       </div>
       <div class="update-notice saved">
-        Field Update was successfull!
+        All data saved!
       </div>
       <div class="field">
         <p class=" text-center mt-30">Variant Description for:</p>
@@ -77,13 +77,13 @@
             <%}%>
           </div>
 
-
+          <a href="/items/<%=item_id%>/variants" class="button button-button control mt-30">Back to Items</a>
           <div class="">
             <input type="hidden" name="" id="item_id" value="<%=item_id%>">
             <input type="hidden" name="" id="variant_id" value="<%=variant.variant_id%>">
           </div>
         </div>
-          <script type="text/javascript" src="/javascripts/main.js"></script>
+        <script type="text/javascript" src="/javascripts/main.js"></script>
 
 
     </body>

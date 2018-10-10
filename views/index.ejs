@@ -29,7 +29,11 @@
         <div class="item-grid <%=item.id%>">
            <div class="">
              <div class="item-grid__img-cont">
-               <img src="/images/rasta/item1.jpg" alt="" class="item-grid__img w-100">
+               <%if(item.images.length > 0){%>
+                 <img src="https://s3.eu-west-2.amazonaws.com/glammycare/<%=item.images[0].image%>" alt="" class="item-grid__img w-100">
+               <%}else{%>
+                 <img src="/images/rasta/no-image.png" alt="" class="item-grid__img w-100">
+                <%}%>
              </div>
            </div>
            <div class="item-grid-desc">
@@ -50,7 +54,6 @@
              <ul class="action mr-20 mb-20">
                <li class="action_item rel ">Item
                   <ul class="action_dropdown abs">
-                    <li class="view action_dropdown-list"><a href="#">View</a></li>
                     <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/descriptions`%>>Edit Description</a></li>
                     <li class="edit action_dropdown-list"><a href=<%=`items/${item.id}/edit/details`%>>Edit Detail</a></li>
                     <li class="trash action_dropdown-list"><a href="#" class="js-delete-item-link" type="link" item_id="<%=item.id%>" item_name=" <%=item.name%>">Delete</a></li>
@@ -62,10 +65,8 @@
 
                <li class="action_item rel ">Variant
                   <ul class="action_dropdown abs">
-                    <li class="view action_dropdown-list"><a href=<%=`/items/${item.id}/variants`%>>View</a></li>
-                    <li class="view action_dropdown-list"><a class="js-new-variant-btn" item_id="<%=item.id%>" item_name=" <%=item.name%>" type="link" href="#">New</a></li>
-                    <li class="edit action_dropdown-list"><a href="">Edit</a></li>
-                    <li class="trash action_dropdown-list "><a href="#">Delete</a></li>
+                    <li class="view action_dropdown-list"><a href=<%=`/items/${item.id}/variants`%>>View All</a></li>
+                    <li class="add-new action_dropdown-list"><a class="js-new-variant-btn" item_id="<%=item.id%>" item_name=" <%=item.name%>" type="link" href="#">Add New</a></li>
                   </ul>
                </li>
              </ul>

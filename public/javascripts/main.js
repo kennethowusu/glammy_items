@@ -47,22 +47,23 @@ $('div,p').on('focusout', (e) => {
 
 //update description
 const updateDescription = () => {
+  showSaving();
   let url = `/items/${item_id}/descriptions/about`;
   let data = {
     about: about.getData()
   };
-  showSaving();
+
   $.ajax({url: url, type: "put", data: data}).done(() => {
     showSaved();
   })
 }
 //update ingredients
 const updateIngredients = () => {
+  showSaving();
   let url = `/items/${item_id}/descriptions/ingredients`;
   let data = {
     ingredients: ingredients.getData()
   };
-  showSaving();
   $.ajax({url: url, type: "put", data: data}).done(() => {
     showSaved();
   })
@@ -70,11 +71,12 @@ const updateIngredients = () => {
 
 //update how to use
 const updateHow_to_use = () => {
+  showSaving();
   let url = `/items/${item_id}/descriptions/how_to_use`;
   let data = {
     how_to_use: how_to_use.getData()
   };
-  showSaving();
+
   $.ajax({url: url, type: "put", data: data}).done(() => {
     showSaved();
   })

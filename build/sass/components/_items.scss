@@ -24,6 +24,12 @@
 .items-head{
   font-size: 1.4em;
 }
+.item-grid-desc__name{
+  max-width:420px;
+  height:48px;
+  max-height:48px;
+  overflow:hidden;
+}
 
 .bold{
   font-weight: $font-weight--bold;
@@ -48,6 +54,9 @@
 .price-variant-cont{
   max-width:418px;
 }
+.price-variant-color-cont{
+  max-width:202px;
+}
 //==========================FOR ACTION ================================//
 .action-item{
   background:url("../images/svg/action-hamburger.svg");
@@ -61,7 +70,10 @@
   background: url(/images/svg/edit.svg) no-repeat 100%;
   background-size: 20px;
 }
-
+.add-new{
+  background: url(/images/svg/add-new.svg) no-repeat 100%;
+  background-size: 21px;
+}
 .trash{
   background: url(/images/svg/trash.svg) no-repeat 100%;
   background-size: 20px;
