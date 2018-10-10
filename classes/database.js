@@ -25,7 +25,7 @@ class Database{
       }//connectDb
   }
 //
-var connectDb = new Database(process.env.DATABASE,process.env.user,process.env.PASSWORD,process.env.HOST);
+var connectDb = new Database("glammycare","user","password123","localhost");
 var db = connectDb.connect();
 
 db.authenticate()
