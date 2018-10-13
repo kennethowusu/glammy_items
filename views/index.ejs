@@ -15,7 +15,11 @@
 
 
 
-       <p class=""><span class="items-count">Items: </span><span class="bold items-count-num"><%=items_count%></span></p>
+       <p class=""><span class="items-count">Items: </span>
+         <span class="f-22 "><%=itemsShowing%></span >
+           <span class="f-22">/</span>
+         <span class="bold items-count-num"><%=items_count%></span>
+       </p>
    </div>
 
 
@@ -79,6 +83,14 @@
       <%}%>
    </div>
 
+  <div class="paginate-cont clearfix">
+    <%if(page>1){%>
+      <a href="?page=<%=page-1%>" class="paginate left"></a>
+    <%}%>
+    <%if(page<numOfPages){%>
+    <a href="?page=<%=page+1%>" class="paginate right"></a>
+    <%}%>
+  </div>
 
   <script type="text/javascript" src="/javascripts/home.js"></script>
   </body>

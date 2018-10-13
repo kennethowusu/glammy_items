@@ -22,15 +22,40 @@ require('dotenv').config();
 
 //GET ALL ITEMS
 module.exports.getAllItems = (req,res,next)=>{
+   var page = req.query.page;
+   if(page){
+      page = parseInt(req.query.page);
+   }
+   if(typeof(page) == "undefined"){
+     page = 1;
+   }
+   var itemsPerPage = 8;
+   var offset = (page - 1) * itemsPerPage;
   Item.findAndCountAll({
+    offset:offset,
+    limit:itemsPerPage,
     include:[
       {model:Image,required:false},
       {model:Variant,required:false}
     ]
   })
   .then((items)=>{
-     return res.render('index',{title: "Items",items:items.rows,items_count:items.count});
+     var numOfPages = Math.ceil(items.count/itemsPerPage);
+     var itemsShowing = ((page - 1) * itemsPerPage) + items.rows.length;
+     console.log(itemsShowing);
+     return res.render('index',
+     {
+       title: "Items",
+       items:items.rows,
+       items_count:items.count,
+       numOfPages:numOfPages,
+       page:page,
+       itemsShowing:itemsShowing
+      });
   });
+  // console.log(`page is: ${page}`);
+  // console.log(`offset is : ${offset}`);
+  // console.log(`itemsPerPage is : ${itemsPerPage}`);
 }
 
 //GET NEW ITEM FORM

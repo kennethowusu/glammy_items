@@ -26,7 +26,7 @@ module.exports.s3 = new aws.S3({
           cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
-          cb(null,Date.now()+file.originalname);
+          cb(null,Date.now()+"-"+file.originalname);
         }
       })
     }).single('image');

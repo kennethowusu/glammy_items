@@ -263,3 +263,10 @@
 .f-22{
   font-size : 22px;
 }
+
+//float
+.clearfix::after{
+  content:"";
+  display:table;
+  clear:both
+}

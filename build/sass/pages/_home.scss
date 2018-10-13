@@ -41,4 +41,40 @@ a,a:hover{
   }
 
 }
-//============FOR NEW ITEM ====================//
+//============FOR PAGINATION ====================//
+.paginate-cont{
+  width:100%;
+  margin-bottom:40px;
+  bottom:20px;
+
+  @media(min-width:500px){
+    bottom:50px;
+  }
+}
+.paginate{
+  width:100px;
+  height:50px;
+  background-color:#f3f4f5;
+  box-shadow:0 0 3px #cacaca;
+
+  &:hover{
+    opacity:0.7;
+  }
+  @media(min-width:500px){
+    width:150px;
+    height:50px;
+  }
+}
+
+ .paginate.left{
+   left:0;
+   background: url("../images/svg/previous.svg")  no-repeat center;
+   background-size:20px 30px;
+   float:left;
+ }
+.paginate.right{
+  right:0;
+  background: url("../images/svg/next.svg")  no-repeat center;
+  background-size:20px 30px;
+  float:right;
+}
